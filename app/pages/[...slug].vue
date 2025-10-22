@@ -53,8 +53,8 @@ const links = computed(() => {
 </script>
 
 <template>
+  <AdsPlaceholder variant="leaderboard" label="Sponsored" badge="Ad" />
   <UPage v-if="page">
-    <AdsPlaceholder variant="leaderboard" label="Sponsored" badge="Ad" />
     <UPageHeader
       :title="page.title"
       :description="page.description"
