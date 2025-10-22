@@ -69,12 +69,17 @@ const links = computed(() => {
       </template>
     </UPageHeader>
 
-    <!-- Top Leaderboard Ad -->
     <div class="my-6 px-4 sm:px-6 lg:px-8">
-      <div
-        class="rounded-xl border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 p-4 flex justify-center items-center"
-      >
-        <AdsPlaceholder variant="leaderboard" label="Sponsored" badge="Ad" />
+      <div class="rounded-xl border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 p-4 flex justify-center">
+        <ClientOnly>
+          <GoogleAd
+            ad-slot="7663977887"
+            ad-format="auto"
+            :fullWidth="true"
+            ins-style="display:block"
+            :refreshKey="page?.updatedAt || page?.path"  <!-- forces remount when content changes -->
+          />
+        </ClientOnly>
       </div>
     </div>
 
