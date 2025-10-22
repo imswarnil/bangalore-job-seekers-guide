@@ -106,9 +106,8 @@ const links = computed(() => {
             :title="toc.bottom.title"
             :links="links"
           />
-  
-          <!-- 👇 Square ad placeholder added here -->
-          <div class="mt-6 flex justify-center">
+
+          <div class="mt-6">
             <AdsPlaceholder variant="rectangle" label="Sponsored" badge="Ad" />
           </div>
         </div>
