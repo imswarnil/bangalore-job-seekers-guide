@@ -111,25 +111,3 @@ const links = computed(() => {
     </template>
   </UPage>
 </template>
-
-<style scoped>
-.rail-sticky {
-  position: sticky;
-  /* Uses your framework header height variable for perfect alignment */
-  top: var(--ui-header-height, 88px);
-  display: grid;
-  gap: 16px;
-  justify-items: center;
-}
-
-.ads-rail {
-  display: grid;
-  gap: 16px;
-  justify-items: center;
-}
-
-@media (max-width: 1100px) {
-  .right-rail { display: none; }
-}
-</style>
-
