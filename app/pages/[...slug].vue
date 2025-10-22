@@ -53,7 +53,6 @@ const links = computed(() => {
 </script>
 
 <template>
-  <AdsPlaceholder variant="leaderboard" label="Sponsored" badge="Ad" />
   <UPage v-if="page">
     <UPageHeader
       :title="page.title"
@@ -69,7 +68,7 @@ const links = computed(() => {
         <PageHeaderLinks />
       </template>
     </UPageHeader>
-
+    <AdsPlaceholder variant="leaderboard" label="Sponsored" badge="Ad" />
     <UPageBody>
       <ContentRenderer
         v-if="page"
@@ -80,7 +79,7 @@ const links = computed(() => {
 
       <UContentSurround :surround="surround" />
     </UPageBody>
-
+    <AdsPlaceholder variant="leaderboard" label="Sponsored" badge="Ad" />
     <template
     v-if="page?.body?.toc?.links?.length"
     #right
