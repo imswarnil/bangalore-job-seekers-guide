@@ -38,7 +38,7 @@ defineOgImageComponent('Docs', {
 })
 
 const links = computed(() => {
-  const links = []
+  const links: any[] = []
   if (toc?.bottom?.edit) {
     links.push({
       icon: 'i-lucide-external-link',
@@ -47,7 +47,6 @@ const links = computed(() => {
       target: '_blank'
     })
   }
-
   return [...links, ...(toc?.bottom?.links || [])].filter(Boolean)
 })
 </script>
@@ -65,7 +64,6 @@ const links = computed(() => {
           :key="index"
           v-bind="link"
         />
-
         <PageHeaderLinks />
       </template>
     </UPageHeader>
@@ -77,38 +75,59 @@ const links = computed(() => {
       />
 
       <USeparator v-if="surround?.length" />
-
       <UContentSurround :surround="surround" />
     </UPageBody>
 
-    <template
-      v-if="page?.body?.toc?.links?.length"
-      #right
-    >
-      <UContentToc
-        :title="toc?.title"
-        :links="page.body?.toc?.links"
-      >
-        <template
-          v-if="toc?.bottom"
-          #bottom
-        >
-          <div
-            class="hidden lg:block space-y-6"
-            :class="{ '!mt-6': page.body?.toc?.links?.length }"
+    <!-- RIGHT rail: TOC (if any) + ad placeholders -->
+    <template #right>
+      <UPageAside class="right-rail">
+        <div class="rail-sticky">
+          <!-- Show TOC only when links exist -->
+          <UContentToc
+            v-if="page?.body?.toc?.links?.length"
+            :title="toc?.title"
+            :links="page.body?.toc?.links"
           >
-            <USeparator
-              v-if="page.body?.toc?.links?.length"
-              type="dashed"
-            />
+            <template v-if="toc?.bottom" #bottom>
+              <div
+                class="hidden lg:block space-y-6"
+                :class="{ '!mt-6': page.body?.toc?.links?.length }"
+              >
+                <USeparator v-if="page.body?.toc?.links?.length" type="dashed" />
+                <UPageLinks :title="toc.bottom.title" :links="links" />
+              </div>
+            </template>
+          </UContentToc>
 
-            <UPageLinks
-              :title="toc.bottom.title"
-              :links="links"
-            />
+          <!-- Ads rail (shown even if no TOC) -->
+          <div class="ads-rail">
+            <AdsPlaceholder variant="skyscraper" label="Sponsored" badge="Ad" />
+            <div style="height:16px"></div>
+            <AdsPlaceholder variant="rectangle" label="Advertisement" badge="Ad" />
           </div>
-        </template>
-      </UContentToc>
+        </div>
+      </UPageAside>
     </template>
   </UPage>
 </template>
+
+<style scoped>
+.rail-sticky {
+  position: sticky;
+  top: 88px; /* adjust to your header height */
+  display: grid;
+  gap: 16px;
+  justify-items: center;
+}
+
+.ads-rail {
+  display: grid;
+  gap: 16px;
+  justify-items: center;
+}
+
+/* Hide the entire right rail on narrower screens */
+@media (max-width: 1100px) {
+  .right-rail { display: none; }
+}
+</style>
