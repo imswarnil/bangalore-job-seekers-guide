@@ -98,6 +98,7 @@ const links = computed(() => {
               </div>
             </template>
           </UContentToc>
+          <h1> Hello </h1>
 
           <!-- Ads rail (shown even if no TOC) -->
           <div class="ads-rail">
