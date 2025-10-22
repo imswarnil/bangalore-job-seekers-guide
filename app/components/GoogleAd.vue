@@ -3,45 +3,33 @@ import { onMounted, ref, watch, nextTick } from 'vue'
 import { useRoute } from 'vue-router'
 
 const props = withDefaults(defineProps<{
-  /** Your AdSense client id: ca-pub-... (kept prop so component is reusable) */
-  adClient?: string
-  /** The ad-slot id from AdSense UI */
-  adSlot: string
-  /** 'auto' (responsive) or fixed sizes via CSS */
-  adFormat?: string
-  /** true for full-width responsive */
-  fullWidth?: boolean
-  /** Optional key input to force-refresh when content changes */
-  refreshKey?: string | number
-  /** Optional: style attribute for the <ins> (e.g., width/height for fixed banners) */
-  insStyle?: string
-  /** Optional: ad-layout / ad-layout-key for in-article/flow units */
+  adClient?: string          // ca-pub-...
+  adSlot: string             // your slot id
+  adFormat?: string          // 'auto' (responsive) or fixed
+  fullWidth?: boolean        // full-width responsive
+  refreshKey?: string|number // change this to force a re-fill
+  insStyle?: string          // style attr for <ins> (e.g. width/height)
   adLayout?: string
   adLayoutKey?: string
+  adTest?: 'on' | 'off'      // dev only: 'on' to test
 }>(), {
   adClient: 'ca-pub-1291242080282540',
   adFormat: 'auto',
   fullWidth: true,
-  insStyle: 'display:block'
+  insStyle: 'display:block',
+  adTest: undefined
 })
 
 const route = useRoute()
-const insRef = ref<HTMLElement | null>(null)
+const mountRef = ref<HTMLElement | null>(null)
 
-/**
- * Render/push the ad. We:
- * 1) Clear any children to ensure a clean mount on refresh
- * 2) Recreate the <ins> element with attributes
- * 3) Call (adsbygoogle = window.adsbygoogle || []).push({})
- */
-async function renderAd() {
-  const mountEl = insRef.value
-  if (!mountEl) return
+async function renderAd () {
+  const el = mountRef.value
+  if (!el) return
 
-  // Clear previous ad DOM (helps remount on route/refreshKey change)
-  mountEl.innerHTML = ''
+  // Clear previous ad instance so Google treats it as fresh
+  el.innerHTML = ''
 
-  // Create <ins> dynamically so Google can fill it as a fresh instance
   const ins = document.createElement('ins')
   ins.className = 'adsbygoogle'
   ins.setAttribute('style', props.insStyle)
@@ -51,35 +39,32 @@ async function renderAd() {
   if (props.fullWidth) ins.setAttribute('data-full-width-responsive', 'true')
   if (props.adLayout) ins.setAttribute('data-ad-layout', props.adLayout)
   if (props.adLayoutKey) ins.setAttribute('data-ad-layout-key', props.adLayoutKey)
+  if (props.adTest) ins.setAttribute('data-adtest', props.adTest)
 
-  mountEl.appendChild(ins)
+  el.appendChild(ins)
 
+  // Push fill request (quietly ignore if blocked/not ready)
   // @ts-ignore
   const q = (window.adsbygoogle = window.adsbygoogle || [])
-  try {
-    q.push({})
-  } catch (e) {
-    // Silently ignore; AdSense may throw if not ready or ad blocked
-    // console.warn('AdSense push error', e)
-  }
+  try { q.push({}) } catch {}
 }
 
 onMounted(async () => {
   await nextTick()
+  // Ensure global queue exists (in case script is deferred)
+  // @ts-ignore
+  window.adsbygoogle = window.adsbygoogle || []
   renderAd()
 })
 
-// Refresh the ad on route changes or when refreshKey changes
-watch(
-  () => [route.fullPath, props.refreshKey],
-  async () => {
-    await nextTick()
-    renderAd()
-  }
-)
+// Re-fill on route change or when you change refreshKey
+watch(() => [route.fullPath, props.refreshKey], async () => {
+  await nextTick()
+  renderAd()
+})
 </script>
 
 <template>
-  <!-- Outer wrapper for styling (let parent control spacing) -->
-  <div ref="insRef" aria-label="Advertisement" />
+  <!-- parent controls spacing; keep ad DOM isolated -->
+  <div ref="mountRef" aria-label="Advertisement" />
 </template>
