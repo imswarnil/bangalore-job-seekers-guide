@@ -3,13 +3,15 @@
       label?: string
       /** preset: square | rectangle | leaderboard | skyscraper | custom */
       variant?: 'square' | 'rectangle' | 'leaderboard' | 'skyscraper' | 'custom'
-      /** only used when variant = custom */
+      /** only used when variant = custom (px values, e.g. "320px") */
       width?: string
       height?: string
       /** compact badge text like "Ad" / "Sponsored" */
       badge?: string
       /** visually hidden heading for a11y landmarks */
       heading?: string
+      /** override the max width (px) when responsive, e.g. "336px" */
+      maxWidth?: string
     }>(), {
       label: 'Advertisement',
       badge: 'Ad',
@@ -17,22 +19,50 @@
       heading: 'Sponsored content'
     })
     
-    const sizeStyle = computed(() => {
-      if (props.variant === 'square') return { width: '300px', height: '300px' }
-      if (props.variant === 'rectangle') return { width: '300px', height: '250px' }
-      if (props.variant === 'leaderboard') return { width: '728px', height: '90px' }
-      if (props.variant === 'skyscraper') return { width: '300px', height: '600px' }
-      return { width: props.width || '320px', height: props.height || '180px' }
+    function pxNum(v?: string) {
+      if (!v) return undefined
+      const n = Number(String(v).replace('px','').trim())
+      return Number.isFinite(n) ? n : undefined
+    }
+    
+    const styleResponsive = computed(() => {
+      // Defaults per IAB-ish sizes
+      let maxW = 320, ratio = 6/5 // rectangle (300x250 ≈ 1.2 => 5:6 height:width -> width/height 300/250 = 1.2 => aspect-ratio: 300/250 = 6/5)
+    
+      if (props.variant === 'square')       { maxW = 300; ratio = 1 / 1 }
+      if (props.variant === 'rectangle')    { maxW = 300; ratio = 300 / 250 }        // 1.2
+      if (props.variant === 'leaderboard')  { maxW = 728; ratio = 728 / 90 }         // ~8.09
+      if (props.variant === 'skyscraper')   { maxW = 300; ratio = 300 / 600 }        // 0.5
+    
+      // Custom variant: compute from provided width/height if possible
+      if (props.variant === 'custom') {
+        const w = pxNum(props.width)  ?? 320
+        const h = pxNum(props.height) ?? 180
+        maxW = w
+        ratio = w / h
+      }
+    
+      // Allow user override of max width (e.g., 336px large rectangle)
+      const overrideMax = pxNum(props.maxWidth)
+      if (overrideMax) maxW = overrideMax
+    
+      // Responsive: width 100% of its parent, capped at maxW, height via aspect-ratio
+      return {
+        width: '100%',
+        maxWidth: `${maxW}px`,
+        aspectRatio: `${ratio}`,
+      } as Record<string, string>
     })
     </script>
     
     <template>
       <aside class="adph" role="complementary" :aria-label="label">
-        <!-- Hidden heading helps screen readers jump between landmarks -->
         <h2 class="sr-only">{{ heading }}</h2>
     
         <span class="adph__badge">{{ badge }}</span>
-        <div class="adph__frame" :style="sizeStyle">
+    
+        <!-- Responsive frame: stretches to container width, keeps shape via aspect-ratio -->
+        <div class="adph__frame" :style="styleResponsive">
           <div class="adph__skeleton" aria-hidden="true">
             <div class="adph__rows">
               <div class="adph__row adph__row--title" />
@@ -42,6 +72,7 @@
             </div>
           </div>
         </div>
+    
         <p class="adph__caption">{{ label }}</p>
       </aside>
     </template>
@@ -74,6 +105,11 @@
       backdrop-filter: blur(2px);
     }
     
+    /* Responsive frame:
+       - width: 100% of its parent (right rail column)
+       - max-width: cap to classic ad width
+       - height: auto via aspect-ratio (set inline)
+    */
     .adph__frame {
       display: flex;
       align-items: center;
@@ -84,7 +120,7 @@
         radial-gradient(ellipse at top left, color-mix(in srgb, var(--ui-bg, #fff) 70%, transparent), transparent 60%),
         radial-gradient(ellipse at bottom right, color-mix(in srgb, var(--ui-bg, #fff) 70%, transparent), transparent 60%);
       overflow: hidden;
-      /* Prevent layout wobble on sticky/scroll */
+      /* Avoid repaint jank when sticky */
       contain: paint;
     }
     
@@ -100,10 +136,12 @@
       background-size: 200% 100%;
       animation: adph-shimmer 1.6s infinite linear;
     }
+    
     /* Respect reduced motion */
     @media (prefers-reduced-motion: reduce) {
       .adph__skeleton { animation: none; }
     }
+    
     :where(html.dark) .adph__skeleton {
       background:
         linear-gradient(100deg,
@@ -135,5 +173,11 @@
     }
     
     .adph__caption { margin: 0; opacity: .7; }
+    
+    /* Optional: when the right rail gets very narrow (e.g. stacked on mobile),
+       let the frame stretch to container width (already 100%)—this just softens the cap */
+    @container (max-width: 320px) {
+      .adph__frame { max-width: 100% !important; }
+    }
     </style>
     
