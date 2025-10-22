@@ -38,7 +38,7 @@ defineOgImageComponent('Docs', {
 })
 
 const links = computed(() => {
-  const links: any[] = []
+  const links = []
   if (toc?.bottom?.edit) {
     links.push({
       icon: 'i-lucide-external-link',
@@ -47,6 +47,7 @@ const links = computed(() => {
       target: '_blank'
     })
   }
+
   return [...links, ...(toc?.bottom?.links || [])].filter(Boolean)
 })
 </script>
@@ -64,6 +65,7 @@ const links = computed(() => {
           :key="index"
           v-bind="link"
         />
+
         <PageHeaderLinks />
       </template>
     </UPageHeader>
@@ -75,39 +77,44 @@ const links = computed(() => {
       />
 
       <USeparator v-if="surround?.length" />
+
       <UContentSurround :surround="surround" />
     </UPageBody>
 
-    <!-- RIGHT rail: TOC (if any) + ad placeholders -->
-    <template #right>
-      <UPageAside class="right-rail">
-        <div class="rail-sticky">
-          <!-- Show TOC only when links exist -->
-          <UContentToc
-            v-if="page?.body?.toc?.links?.length"
-            :title="toc?.title"
-            :links="page.body?.toc?.links"
-          >
-            <template v-if="toc?.bottom" #bottom>
-              <div
-                class="hidden lg:block space-y-6"
-                :class="{ '!mt-6': page.body?.toc?.links?.length }"
-              >
-                <USeparator v-if="page.body?.toc?.links?.length" type="dashed" />
-                <UPageLinks :title="toc.bottom.title" :links="links" />
-              </div>
-            </template>
-          </UContentToc>
-          <h1> Hello </h1>
-
-          <!-- Ads rail (shown even if no TOC) -->
-          <div class="ads-rail">
-            <AdsPlaceholder variant="skyscraper" label="Sponsored" badge="Ad" />
-            <div style="height:16px"></div>
-            <AdsPlaceholder variant="rectangle" label="Advertisement" badge="Ad" />
+    <template
+    v-if="page?.body?.toc?.links?.length"
+    #right
+  >
+    <UContentToc
+      :title="toc?.title"
+      :links="page.body?.toc?.links"
+    >
+      <template
+        v-if="toc?.bottom"
+        #bottom
+      >
+        <div
+          class="hidden lg:block space-y-6"
+          :class="{ '!mt-6': page.body?.toc?.links?.length }"
+        >
+          <USeparator
+            v-if="page.body?.toc?.links?.length"
+            type="dashed"
+          />
+  
+          <UPageLinks
+            :title="toc.bottom.title"
+            :links="links"
+          />
+  
+          <!-- 👇 Square ad placeholder added here -->
+          <div class="mt-6 flex justify-center">
+            <AdsPlaceholder variant="square" label="Sponsored" badge="Ad" />
           </div>
         </div>
-      </UPageAside>
-    </template>
+      </template>
+    </UContentToc>
+  </template>
+  
   </UPage>
 </template>
