@@ -54,6 +54,7 @@ const links = computed(() => {
 
 <template>
   <UPage v-if="page">
+    <AdsPlaceholder variant="leaderboard" label="Sponsored" badge="Ad" />
     <UPageHeader
       :title="page.title"
       :description="page.description"
@@ -65,7 +66,6 @@ const links = computed(() => {
           :key="index"
           v-bind="link"
         />
-
         <PageHeaderLinks />
       </template>
     </UPageHeader>
@@ -107,9 +107,13 @@ const links = computed(() => {
             :links="links"
           />
         </div>
-        <div class="mt-6">
+
+        <div
+          class="hidden lg:block space-y-6"
+          :class="{ '!mt-6': page.body?.toc?.links?.length }"
+        >
           <AdsPlaceholder variant="rectangle" label="Sponsored" badge="Ad" />
-        </div>
+      </div>
       </template>
     </UContentToc>
   </template>
