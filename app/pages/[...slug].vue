@@ -106,10 +106,9 @@ const links = computed(() => {
             :title="toc.bottom.title"
             :links="links"
           />
-
-          <div class="mt-6">
-            <AdsPlaceholder variant="rectangle" label="Sponsored" badge="Ad" />
-          </div>
+        </div>
+        <div class="mt-6">
+          <AdsPlaceholder variant="rectangle" label="Sponsored" badge="Ad" />
         </div>
       </template>
     </UContentToc>
