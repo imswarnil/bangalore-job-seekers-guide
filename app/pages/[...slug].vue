@@ -68,7 +68,16 @@ const links = computed(() => {
         <PageHeaderLinks />
       </template>
     </UPageHeader>
-    <AdsPlaceholder variant="leaderboard" label="Sponsored" badge="Ad" />
+
+    <!-- Top Leaderboard Ad -->
+    <div class="my-6 px-4 sm:px-6 lg:px-8">
+      <div
+        class="rounded-xl border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 p-4 flex justify-center items-center"
+      >
+        <AdsPlaceholder variant="leaderboard" label="Sponsored" badge="Ad" />
+      </div>
+    </div>
+
     <UPageBody>
       <ContentRenderer
         v-if="page"
@@ -79,43 +88,46 @@ const links = computed(() => {
 
       <UContentSurround :surround="surround" />
     </UPageBody>
-    <AdsPlaceholder variant="leaderboard" label="Sponsored" badge="Ad" />
-    <template
-    v-if="page?.body?.toc?.links?.length"
-    #right
-  >
-    <UContentToc
-      :title="toc?.title"
-      :links="page.body?.toc?.links"
-    >
-      <template
-        v-if="toc?.bottom"
-        #bottom
-      >
-        <div
-          class="hidden lg:block space-y-6"
-          :class="{ '!mt-6': page.body?.toc?.links?.length }"
-        >
-          <USeparator
-            v-if="page.body?.toc?.links?.length"
-            type="dashed"
-          />
-  
-          <UPageLinks
-            :title="toc.bottom.title"
-            :links="links"
-          />
-        </div>
 
-        <div
-          class="hidden lg:block space-y-6"
-          :class="{ '!mt-6': page.body?.toc?.links?.length }"
-        >
-          <AdsPlaceholder variant="rectangle" label="Sponsored" badge="Ad" />
+    <!-- Bottom Leaderboard Ad -->
+    <div class="my-10 px-4 sm:px-6 lg:px-8">
+      <div
+        class="rounded-xl border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 p-4 flex justify-center items-center"
+      >
+        <AdsPlaceholder variant="leaderboard" label="Sponsored" badge="Ad" />
       </div>
-      </template>
-    </UContentToc>
-  </template>
-  
+    </div>
+
+    <!-- Right Sidebar TOC + Ads -->
+    <template v-if="page?.body?.toc?.links?.length" #right>
+      <UContentToc
+        :title="toc?.title"
+        :links="page.body?.toc?.links"
+      >
+        <template v-if="toc?.bottom" #bottom>
+          <div
+            class="hidden lg:block space-y-6"
+            :class="{ '!mt-6': page.body?.toc?.links?.length }"
+          >
+            <USeparator
+              v-if="page.body?.toc?.links?.length"
+              type="dashed"
+            />
+
+            <UPageLinks
+              :title="toc.bottom.title"
+              :links="links"
+            />
+          </div>
+
+          <!-- Sidebar Ad -->
+          <div
+            class="hidden lg:block mt-8 p-4 border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 rounded-lg"
+          >
+            <AdsPlaceholder variant="rectangle" label="Sponsored" badge="Ad" />
+          </div>
+        </template>
+      </UContentToc>
+    </template>
   </UPage>
 </template>
