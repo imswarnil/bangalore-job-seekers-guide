@@ -1,25 +1,137 @@
 @import "tailwindcss";
 @import "@nuxt/ui";
 
+/* Let Nuxt Content pick up prose tokens */
 @source "../../../content/**/*";
 
+/* =========================================================
+   SLDS-inspired Theme for Nuxt UI
+   - Brand (Primary): Salesforce Blue
+   - Neutrals: cool gray slate
+   - Success/Warning/Error: SLDS tokens
+   - Compact radius (4px), subtle borders/shadows
+   ========================================================= */
 @theme static {
+  /* Layout & Typography */
   --container-8xl: 90rem;
-  --font-sans: 'Public Sans', sans-serif;
+  --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
 
-  --color-green-50: #EFFDF5;
-  --color-green-100: #D9FBE8;
-  --color-green-200: #B3F5D1;
-  --color-green-300: #75EDAE;
-  --color-green-400: #00DC82;
-  --color-green-500: #00C16A;
-  --color-green-600: #00A155;
-  --color-green-700: #007F45;
-  --color-green-800: #016538;
-  --color-green-900: #0A5331;
-  --color-green-950: #052E16;
+  /* ---------- Brand / Primary: SLDS Blue ---------- */
+  /* Reference: #0176D3 (brand), #0B5CAB (dark), #032D60 (darker) */
+  --color-blue-50:  #EAF5FF;
+  --color-blue-100: #D8ECFF;
+  --color-blue-200: #B9DCFF;
+  --color-blue-300: #8CC3FF;
+  --color-blue-400: #59A8FF;
+  --color-blue-500: #1B96FF; /* light brand */
+  --color-blue-600: #0176D3; /* core brand */
+  --color-blue-700: #0B5CAB; /* brand dark */
+  --color-blue-800: #084C8A;
+  --color-blue-900: #053B70;
+  --color-blue-950: #032D60; /* brand darker */
+
+  /* ---------- Neutrals (cool gray) ---------- */
+  --color-slate-50:  #F3F6F9;
+  --color-slate-100: #E5EAEE;
+  --color-slate-200: #D8DDE6;
+  --color-slate-300: #C9CEDA;
+  --color-slate-400: #A8B2C7;
+  --color-slate-500: #919CB1;
+  --color-slate-600: #6B7C93;
+  --color-slate-700: #4E5E78;
+  --color-slate-800: #394A64;
+  --color-slate-900: #2B3852;
+  --color-slate-950: #1F2A44;
+
+  /* ---------- Success (SLDS) ---------- */
+  --color-green-50:  #E6F4EA;
+  --color-green-100: #CDEAD6;
+  --color-green-200: #A4DDB7;
+  --color-green-300: #76C98F;
+  --color-green-400: #3FAD68;
+  --color-green-500: #2E844A; /* SLDS success */
+  --color-green-600: #226B39;
+  --color-green-700: #1B5A31;
+  --color-green-800: #154A29;
+  --color-green-900: #0F3C22;
+  --color-green-950: #0A2E1B;
+
+  /* ---------- Warning (SLDS) ---------- */
+  --color-yellow-50:  #FFF4E5;
+  --color-yellow-100: #FFE6C7;
+  --color-yellow-200: #FFD29A;
+  --color-yellow-300: #FFB864;
+  --color-yellow-400: #FF9736;
+  --color-yellow-500: #DD7A01; /* SLDS warning (orange) */
+  --color-yellow-600: #B56203;
+  --color-yellow-700: #8F4E03;
+  --color-yellow-800: #6F3D02;
+  --color-yellow-900: #522F02;
+  --color-yellow-950: #3B2201;
+
+  /* ---------- Error (SLDS) ---------- */
+  --color-red-50:  #FDECEE;
+  --color-red-100: #F9D2D6;
+  --color-red-200: #F3A9B0;
+  --color-red-300: #EA7C88;
+  --color-red-400: #D65766;
+  --color-red-500: #BA0517; /* SLDS error */
+  --color-red-600: #93040F;
+  --color-red-700: #74030C;
+  --color-red-800: #5A0209;
+  --color-red-900: #3F0106;
+  --color-red-950: #2A0004;
 }
 
+/* Container width for your docs */
 :root {
   --ui-container: var(--container-8xl);
+}
+
+/* =========================================================
+   Nuxt UI Base Mapping / Tweaks
+   Nuxt UI auto-maps --color-* to --ui-color-*, but we’ll also
+   tune radius, borders, and surface colors to feel like SLDS.
+   ========================================================= */
+@layer base {
+  :root, .light {
+    /* Primary = SLDS brand blue */
+    --ui-primary: var(--color-blue-600);
+
+    /* Radius: SLDS = compact corners (~4px) */
+    --ui-radius: .25rem;
+    --ui-radius-sm: .25rem;
+    --ui-radius-md: .25rem;
+    --ui-radius-lg: .375rem;
+
+    /* Subtle borders on cards/inputs (light mode) */
+    --ui-border: color-mix(in oklab, var(--color-slate-300) 70%, transparent);
+    --ui-bg: #ffffff;
+    --ui-elevated: #ffffff;
+    --ui-bg-accented: color-mix(in oklab, var(--color-blue-50) 30%, #fff);
+    --ui-ring: color-mix(in oklab, var(--color-blue-600) 40%, transparent);
+    --ui-shadow: 0 1px 2px rgba(3, 45, 96, 0.06), 0 3px 8px rgba(3,45,96,.05);
+  }
+
+  .dark {
+    /* Primary slightly lighter in dark for contrast */
+    --ui-primary: var(--color-blue-500);
+
+    /* Neutral surfaces in dark */
+    --ui-border: color-mix(in oklab, var(--color-slate-800) 85%, transparent);
+    --ui-bg: var(--color-slate-950);
+    --ui-elevated: var(--color-slate-900);
+    --ui-bg-accented: color-mix(in oklab, var(--color-blue-900) 50%, var(--color-slate-900));
+    --ui-ring: color-mix(in oklab, var(--color-blue-400) 45%, transparent);
+    --ui-shadow: 0 1px 2px rgba(0,0,0,.5), 0 6px 16px rgba(0,0,0,.35);
+  }
+
+  /* Make buttons/inputs feel a bit more SLDS (compact + bordered) */
+  button, .btn, [role="button"] {
+    border-radius: var(--ui-radius);
+  }
+  input, textarea, select, .card, .prose :where(table) {
+    border-radius: var(--ui-radius);
+    border: 1px solid var(--ui-border);
+  }
 }
