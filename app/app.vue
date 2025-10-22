@@ -30,17 +30,13 @@ provide('navigation', navigation)
 <template>
   <UApp>
     <NuxtLoadingIndicator />
-
     <AppHeader />
-
     <UMain>
       <NuxtLayout>
         <NuxtPage />
       </NuxtLayout>
     </UMain>
-
     <AppFooter />
-
     <ClientOnly>
       <LazyUContentSearch
         :files="files"
