@@ -1,7 +1,7 @@
 ---
 seo:
-  title: CRM Analytics Academy – Learn Salesforce Einstein Analytics, Tableau CRM, SAQL & Dashboards
-  description: Master Salesforce CRM Analytics (Einstein Analytics / Tableau CRM). Learn dashboards, SAQL, dataflows, and recipes with real Salesforce use cases.
+  title: Nuxt Docs Template
+  description: Create stunning, fast and SEO-optimized documentation sites with Nuxt UI.
 ---
 
 ::u-page-hero{class="dark:bg-gradient-to-b from-neutral-900 to-neutral-950"}
@@ -12,10 +12,10 @@ orientation: horizontal
 :hero-background
 
 #title
-Ship Beautiful [Analytics Dashboards]{.text-primary}.
+Ship Beautiful [Documentation]{.text-primary}.
 
 #description
-Build data-driven stories with **Salesforce CRM Analytics (Einstein Analytics / Tableau CRM)** — the platform powering insights across Sales, Service & Marketing Cloud. Learn **SAQL**, dataflows, recipes, and dashboard design that actually drives business results.
+Build professional documentation with Nuxt UI's powerful components, enhanced typography, and seamless Nuxt Content integration. The same system trusted by the entire [Nuxt ecosystem](https://nuxt.com).
 
 #links
   :::u-button
@@ -24,7 +24,7 @@ Build data-driven stories with **Salesforce CRM Analytics (Einstein Analytics / 
   size: xl
   trailing-icon: i-lucide-arrow-right
   ---
-  Get Started with CRM Analytics
+  Get started
   :::
 
   :::u-button
@@ -33,10 +33,10 @@ Build data-driven stories with **Salesforce CRM Analytics (Einstein Analytics / 
   color: neutral
   variant: outline
   size: xl
-  to: https://github.com/imswarnil/crm-analytics-academy
+  to: https://github.com/nuxt-ui-templates/docs
   target: _blank
   ---
-  View on GitHub
+  Use this template
   :::
 
 #default
@@ -50,6 +50,7 @@ Build data-driven stories with **Salesforce CRM Analytics (Einstein Analytics / 
         'nuxt-og-image',
         'nuxt-llms'
       ],
+
       css: ['~/assets/css/main.css']
     })
   filename: nuxt.config.ts
@@ -63,6 +64,7 @@ Build data-driven stories with **Salesforce CRM Analytics (Einstein Analytics / 
       'nuxt-og-image',
       'nuxt-llms'
     ],
+
     css: ['~/assets/css/main.css']
   })
   ```
@@ -71,7 +73,7 @@ Build data-driven stories with **Salesforce CRM Analytics (Einstein Analytics / 
 
 ::u-page-section{class="dark:bg-neutral-950"}
 #title
-Powered by Salesforce CRM Analytics
+Powered by Nuxt UI components
 
 #links
   :::u-button
@@ -79,67 +81,67 @@ Powered by Salesforce CRM Analytics
   color: neutral
   size: lg
   target: _blank
-  to: https://help.salesforce.com/s/articleView?id=sf.bi_analytics_overview.htm&type=5
+  to: https://ui.nuxt.com/docs/getting-started/installation/nuxt
   trailingIcon: i-lucide-arrow-right
   variant: subtle
   ---
-  Explore CRM Analytics
+  Explore Nuxt UI
   :::
 
 #features
   :::u-page-feature
   ---
-  icon: i-lucide-layout-dashboard
+  icon: i-lucide-palette
   ---
   #title
-  Interactive Dashboards
+  100+ UI Components
 
   #description
-  Build rich, dynamic dashboards that visualize your Sales and Service Cloud data using **SAQL**, bindings, and selectors.
+  Access the complete Nuxt UI component library. From badges to modals, everything styled and accessible out of the box.
   :::
 
   :::u-page-feature
   ---
-  icon: i-lucide-bolt
+  icon: i-lucide-type
   ---
   #title
-  SAQL – The Analytics Engine
+  Beautiful Typography
 
   #description
-  Learn **Salesforce Analytics Query Language (SAQL)** to perform advanced aggregations, comparisons, and visual transformations.
+  Pre-styled prose components with perfect visual harmony. No need for @tailwindcss/typography - get precise control over every element.
   :::
 
   :::u-page-feature
   ---
-  icon: i-lucide-database
+  icon: i-lucide-layers
   ---
   #title
-  Dataflows & Recipes
+  Rich Prose Components
 
   #description
-  Prepare data from Salesforce, Data Cloud, or external sources with **dataflows** and low-code **recipes** for reusable datasets.
+  Accordions, cards, callouts, tabs, steps, code blocks, and more - all provided by Nuxt UI for interactive documentation.
   :::
 
   :::u-page-feature
   ---
-  icon: i-lucide-link
+  icon: i-lucide-search
   ---
   #title
-  Dynamic Bindings
+  Built-in Search
 
   #description
-  Make dashboards respond to user filters, selections, and steps with real-time **bindings** and context-aware queries.
+  Full-text search with ContentSearch component. No need for Algolia - instant, relevant results with keyboard shortcuts (⌘K).
   :::
 
   :::u-page-feature
   ---
-  icon: i-lucide-shield-check
+  icon: i-lucide-navigation
   ---
   #title
-  Row-Level Security
+  Smart Navigation
 
   #description
-  Apply **security predicates** to ensure users see only their data — respecting Salesforce sharing and territory models.
+  Auto-generated navigation with ContentNavigation and ContentToc components. Sticky table of contents and prev/next links.
   :::
 
   :::u-page-feature
@@ -150,13 +152,13 @@ Powered by Salesforce CRM Analytics
   Dark Mode Ready
 
   #description
-  Seamless dark mode support for all dashboards and UI components. Look professional even when burning midnight oil.
+  Automatic theme switching with smooth transitions. Respects system preferences and remembers user choice.
   :::
 ::
 
 ::u-page-section{class="dark:bg-neutral-950"}
 #title
-Enhanced with Real Salesforce Use Cases
+Enhanced with Nuxt Content
 
 #links
   :::u-button
@@ -164,45 +166,56 @@ Enhanced with Real Salesforce Use Cases
   color: neutral
   size: lg
   target: _blank
-  to: https://trailhead.salesforce.com/
+  to: https://content.nuxt.com/docs/getting-started/installation
   trailingIcon: i-lucide-arrow-right
   variant: subtle
   ---
-  Explore on Trailhead
+  Explore Nuxt Content
   :::
 
 #features
   :::u-page-feature
   ---
-  icon: i-lucide-funnel
+  icon: i-simple-icons-markdown
   ---
   #title
-  Sales Cloud Insights
+  MDC Enhanced Markdown
 
   #description
-  Build **Pipeline**, **Quota**, and **Forecast** dashboards powered by SAQL. Track deals, stage velocity, and conversion performance.
+  Write in Markdown while embedding Vue components. Seamlessly integrate interactive elements in your content.
   :::
 
   :::u-page-feature
   ---
-  icon: i-lucide-life-buoy
+  icon: i-lucide-file-text
   ---
   #title
-  Service Cloud Analytics
+  File-based Routing
 
   #description
-  Measure **SLA compliance**, case backlog, first contact resolution, and agent performance — all within CRM Analytics.
+  Organize content in folders and files. Your documentation structure automatically becomes your navigation.
   :::
 
   :::u-page-feature
   ---
-  icon: i-lucide-target
+  icon: i-lucide-code
   ---
   #title
-  Marketing Cloud Integration
+  Syntax Highlighting
 
   #description
-  Analyze campaigns, leads, and attribution by connecting CRM Analytics with **Marketing Cloud** and **Data Cloud**.
+  Beautiful code blocks with language detection, line numbers, and copy buttons. Support for 100+ languages.
+  :::
+
+  :::u-page-feature
+  ---
+  icon: i-lucide-database
+  ---
+  #title
+  Content Database
+
+  #description
+  Query your content with a MongoDB-like API. Filter, sort, and search through your documentation programmatically.
   :::
 
   :::u-page-feature
@@ -210,10 +223,10 @@ Enhanced with Real Salesforce Use Cases
   icon: i-lucide-file-code
   ---
   #title
-  SAQL Recipes
+  Frontmatter Support
 
   #description
-  Combine data from multiple objects, apply calculations, and generate trend visualizations in minutes with easy SAQL snippets.
+  Add metadata to your content files. Define SEO tags, navigation properties, and custom fields.
   :::
 
   :::u-page-feature
@@ -221,10 +234,10 @@ Enhanced with Real Salesforce Use Cases
   icon: i-lucide-git-branch
   ---
   #title
-  Version Control Friendly
+  Version Control
 
   #description
-  Manage dashboards, dataflows, and templates directly from your GitHub repo — ideal for teams and CI/CD environments.
+  Content lives in your repository. Branch, review, and deploy documentation alongside your code.
   :::
 ::
 
@@ -232,16 +245,16 @@ Enhanced with Real Salesforce Use Cases
   :::u-page-c-t-a
   ---
   links:
-    - label: Start Learning Now
+    - label: Start building
       to: '/getting-started'
       trailingIcon: i-lucide-arrow-right
-    - label: View Curriculum
-      to: '/curriculum'
+    - label: View on GitHub
+      to: 'https://github.com/nuxt-ui-templates/docs'
       target: _blank
       variant: subtle
-      icon: i-lucide-book-open
-  title: Ready to Master Salesforce CRM Analytics?
-  description: Learn how to build dashboards, datasets, recipes, and dataflows that turn your Salesforce data into actionable business intelligence.
+      icon: i-simple-icons-github
+  title: Ready to build an amazing documentation?
+  description: Join thousands of developers building with Nuxt and Nuxt UI. Get this template and start shipping today.
   class: dark:bg-neutral-950
   ---
 
