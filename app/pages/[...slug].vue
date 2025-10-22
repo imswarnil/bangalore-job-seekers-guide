@@ -109,7 +109,7 @@ const links = computed(() => {
   
           <!-- 👇 Square ad placeholder added here -->
           <div class="mt-6 flex justify-center">
-            <AdsPlaceholder variant="square" label="Sponsored" badge="Ad" />
+            <AdsPlaceholder variant="rectangle" label="Sponsored" badge="Ad" />
           </div>
         </div>
       </template>
