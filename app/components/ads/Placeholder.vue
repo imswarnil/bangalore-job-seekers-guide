@@ -8,27 +8,32 @@
       height?: string
       /** compact badge text like "Ad" / "Sponsored" */
       badge?: string
+      /** visually hidden heading for a11y landmarks */
+      heading?: string
     }>(), {
       label: 'Advertisement',
       badge: 'Ad',
-      variant: 'rectangle'
+      variant: 'rectangle',
+      heading: 'Sponsored content'
     })
     
     const sizeStyle = computed(() => {
       if (props.variant === 'square') return { width: '300px', height: '300px' }
-      if (props.variant === 'rectangle') return { width: '300px', height: '250px' }       // 300×250
+      if (props.variant === 'rectangle') return { width: '300px', height: '250px' }
       if (props.variant === 'leaderboard') return { width: '728px', height: '90px' }
       if (props.variant === 'skyscraper') return { width: '300px', height: '600px' }
-      // custom
       return { width: props.width || '320px', height: props.height || '180px' }
     })
     </script>
     
     <template>
       <aside class="adph" role="complementary" :aria-label="label">
+        <!-- Hidden heading helps screen readers jump between landmarks -->
+        <h2 class="sr-only">{{ heading }}</h2>
+    
         <span class="adph__badge">{{ badge }}</span>
         <div class="adph__frame" :style="sizeStyle">
-          <div class="adph__skeleton">
+          <div class="adph__skeleton" aria-hidden="true">
             <div class="adph__rows">
               <div class="adph__row adph__row--title" />
               <div class="adph__row" />
@@ -42,6 +47,12 @@
     </template>
     
     <style scoped>
+    /* Visually hidden utility */
+    .sr-only {
+      position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+      overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0;
+    }
+    
     .adph {
       position: relative;
       display: grid;
@@ -50,7 +61,7 @@
       font-size: 12px;
       color: rgba(0,0,0,.6);
     }
-    :where(html.dark) .adph { color: rgba(255,255,255,.6); }
+    :where(html.dark) .adph { color: rgba(255,255,255,.7); }
     
     .adph__badge {
       position: absolute;
@@ -73,6 +84,8 @@
         radial-gradient(ellipse at top left, color-mix(in srgb, var(--ui-bg, #fff) 70%, transparent), transparent 60%),
         radial-gradient(ellipse at bottom right, color-mix(in srgb, var(--ui-bg, #fff) 70%, transparent), transparent 60%);
       overflow: hidden;
+      /* Prevent layout wobble on sticky/scroll */
+      contain: paint;
     }
     
     .adph__skeleton {
@@ -86,6 +99,10 @@
           rgba(0,0,0,0.06) 60%);
       background-size: 200% 100%;
       animation: adph-shimmer 1.6s infinite linear;
+    }
+    /* Respect reduced motion */
+    @media (prefers-reduced-motion: reduce) {
+      .adph__skeleton { animation: none; }
     }
     :where(html.dark) .adph__skeleton {
       background:
@@ -101,33 +118,22 @@
     }
     
     .adph__rows {
-      width: 100%;
-      height: 100%;
-      padding: 12px;
-      display: grid;
-      grid-template-rows: auto auto auto 1fr;
-      gap: 8px;
+      width: 100%; height: 100%; padding: 12px;
+      display: grid; grid-template-rows: auto auto auto 1fr; gap: 8px;
     }
     
     .adph__row {
-      height: 10px;
-      border-radius: 6px;
+      height: 10px; border-radius: 6px;
       background: color-mix(in srgb, currentColor 16%, transparent);
     }
     .adph__row--title { height: 14px; width: 70%; }
     
     .adph__btn {
-      align-self: end;
-      justify-self: start;
-      width: 96px;
-      height: 26px;
-      border-radius: 8px;
+      align-self: end; justify-self: start;
+      width: 96px; height: 26px; border-radius: 8px;
       background: color-mix(in srgb, currentColor 22%, transparent);
     }
     
-    .adph__caption {
-      margin: 0;
-      opacity: .7;
-    }
+    .adph__caption { margin: 0; opacity: .7; }
     </style>
     

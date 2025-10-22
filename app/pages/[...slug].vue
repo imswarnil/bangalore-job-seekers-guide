@@ -114,7 +114,8 @@ const links = computed(() => {
 <style scoped>
 .rail-sticky {
   position: sticky;
-  top: 88px; /* adjust to your header height */
+  /* Uses your framework header height variable for perfect alignment */
+  top: var(--ui-header-height, 88px);
   display: grid;
   gap: 16px;
   justify-items: center;
@@ -126,8 +127,8 @@ const links = computed(() => {
   justify-items: center;
 }
 
-/* Hide the entire right rail on narrower screens */
 @media (max-width: 1100px) {
   .right-rail { display: none; }
 }
 </style>
+
