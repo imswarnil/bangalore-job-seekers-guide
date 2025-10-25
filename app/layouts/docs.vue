@@ -13,8 +13,10 @@ const navigation = inject<Ref<ContentNavigationItem[]>>('navigation')
             highlight
             :navigation="navigation"
           />
+          <h1>hi</h1>
         </UPageAside>
       </template>
+
       <slot />
     </UPage>
   </UContainer>
