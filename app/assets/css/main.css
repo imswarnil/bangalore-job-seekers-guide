@@ -5,30 +5,32 @@
 @source "../../../content/**/*";
 
 /* =========================================================
-   SLDS base, Neo-Brutalist vibe (minimal overrides)
-   - Primary: Confident Blue (trust)
-   - Accents kept (success/warn/error from SLDS)
-   - Boxy corners, bold borders, hard shadows
+   SLDS-inspired Theme for Nuxt UI
+   - Brand (Primary): Salesforce Blue
+   - Neutrals: cool gray slate
+   - Success/Warning/Error: SLDS tokens
+   - Compact radius (4px), subtle borders/shadows
    ========================================================= */
 @theme static {
   /* Layout & Typography */
   --container-8xl: 90rem;
   --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
 
-  /* ---------- Neo-Brutalist Blue (Tailwind-ish) ---------- */
-  --color-blue-50:  #EFF6FF;
-  --color-blue-100: #DBEAFE;
-  --color-blue-200: #BFDBFE;
-  --color-blue-300: #93C5FD;
-  --color-blue-400: #60A5FA;
-  --color-blue-500: #3B82F6;
-  --color-blue-600: #2563EB; /* Primary (confident) */
-  --color-blue-700: #1D4ED8;
-  --color-blue-800: #1E40AF;
-  --color-blue-900: #1E3A8A;
-  --color-blue-950: #0B165B;
+  /* ---------- Brand / Primary: SLDS Blue ---------- */
+  /* Reference: #0176D3 (brand), #0B5CAB (dark), #032D60 (darker) */
+  --color-blue-50:  #EAF5FF;
+  --color-blue-100: #D8ECFF;
+  --color-blue-200: #B9DCFF;
+  --color-blue-300: #8CC3FF;
+  --color-blue-400: #59A8FF;
+  --color-blue-500: #1B96FF; /* light brand */
+  --color-blue-600: #0176D3; /* core brand */
+  --color-blue-700: #0B5CAB; /* brand dark */
+  --color-blue-800: #084C8A;
+  --color-blue-900: #053B70;
+  --color-blue-950: #032D60; /* brand darker */
 
-  /* ---------- Neutrals (kept, slight deepen for contrast) ---------- */
+  /* ---------- Neutrals (cool gray) ---------- */
   --color-slate-50:  #F3F6F9;
   --color-slate-100: #E5EAEE;
   --color-slate-200: #D8DDE6;
@@ -38,71 +40,98 @@
   --color-slate-600: #6B7C93;
   --color-slate-700: #4E5E78;
   --color-slate-800: #394A64;
-  --color-slate-900: #1F2A44; /* a touch darker for outlines */
-  --color-slate-950: #111827; /* deep ink */
+  --color-slate-900: #2B3852;
+  --color-slate-950: #1F2A44;
 
-  /* Success / Warning / Error (SLDS kept) */
-  --color-green-500: #2E844A;
-  --color-yellow-500:#DD7A01;
-  --color-red-500:  #BA0517;
+  /* ---------- Success (SLDS) ---------- */
+  --color-green-50:  #E6F4EA;
+  --color-green-100: #CDEAD6;
+  --color-green-200: #A4DDB7;
+  --color-green-300: #76C98F;
+  --color-green-400: #3FAD68;
+  --color-green-500: #2E844A; /* SLDS success */
+  --color-green-600: #226B39;
+  --color-green-700: #1B5A31;
+  --color-green-800: #154A29;
+  --color-green-900: #0F3C22;
+  --color-green-950: #0A2E1B;
+
+  /* ---------- Warning (SLDS) ---------- */
+  --color-yellow-50:  #FFF4E5;
+  --color-yellow-100: #FFE6C7;
+  --color-yellow-200: #FFD29A;
+  --color-yellow-300: #FFB864;
+  --color-yellow-400: #FF9736;
+  --color-yellow-500: #DD7A01; /* SLDS warning (orange) */
+  --color-yellow-600: #B56203;
+  --color-yellow-700: #8F4E03;
+  --color-yellow-800: #6F3D02;
+  --color-yellow-900: #522F02;
+  --color-yellow-950: #3B2201;
+
+  /* ---------- Error (SLDS) ---------- */
+  --color-red-50:  #FDECEE;
+  --color-red-100: #F9D2D6;
+  --color-red-200: #F3A9B0;
+  --color-red-300: #EA7C88;
+  --color-red-400: #D65766;
+  --color-red-500: #BA0517; /* SLDS error */
+  --color-red-600: #93040F;
+  --color-red-700: #74030C;
+  --color-red-800: #5A0209;
+  --color-red-900: #3F0106;
+  --color-red-950: #2A0004;
 }
 
 /* Container width for your docs */
-:root { --ui-container: var(--container-8xl); }
+:root {
+  --ui-container: var(--container-8xl);
+}
 
 /* =========================================================
-   Nuxt UI Base Mapping / Neo-Brutalist tweaks (only essentials)
+   Nuxt UI Base Mapping / Tweaks
+   Nuxt UI auto-maps --color-* to --ui-color-*, but we’ll also
+   tune radius, borders, and surface colors to feel like SLDS.
    ========================================================= */
 @layer base {
   :root, .light {
-    /* Primary */
+    /* Primary = SLDS brand blue */
     --ui-primary: var(--color-blue-600);
 
-    /* Neo-Brutalist geometry */
-    --ui-radius: 0;             /* boxy */
-    --ui-radius-sm: 0;
-    --ui-radius-md: 0;
-    --ui-radius-lg: 0;
+    /* Radius: SLDS = compact corners (~4px) */
+    --ui-radius: .25rem;
+    --ui-radius-sm: .25rem;
+    --ui-radius-md: .25rem;
+    --ui-radius-lg: .375rem;
 
-    /* Bold outlines + flat surfaces */
-    --ui-border: color-mix(in oklab, var(--color-slate-900) 22%, transparent);
+    /* Subtle borders on cards/inputs (light mode) */
+    --ui-border: color-mix(in oklab, var(--color-slate-300) 70%, transparent);
     --ui-bg: #ffffff;
     --ui-elevated: #ffffff;
-    --ui-bg-accented: color-mix(in oklab, var(--color-blue-50) 35%, #fff);
-
-    /* Hard focus + shadow (offset) */
-    --ui-ring: color-mix(in oklab, var(--color-blue-600) 55%, transparent);
-    --ui-shadow: 4px 4px 0 rgba(17,24,39,.12); /* hard drop, playful */
+    --ui-bg-accented: color-mix(in oklab, var(--color-blue-50) 30%, #fff);
+    --ui-ring: color-mix(in oklab, var(--color-blue-600) 40%, transparent);
+    --ui-shadow: 0 1px 2px rgba(3, 45, 96, 0.06), 0 3px 8px rgba(3,45,96,.05);
   }
 
   .dark {
+    /* Primary slightly lighter in dark for contrast */
     --ui-primary: var(--color-blue-500);
 
-    /* Ink on dark */
-    --ui-border: color-mix(in oklab, #ffffff 22%, transparent);
+    /* Neutral surfaces in dark */
+    --ui-border: color-mix(in oklab, var(--color-slate-800) 85%, transparent);
     --ui-bg: var(--color-slate-950);
-    --ui-elevated: #0B1220;
-    --ui-bg-accented: color-mix(in oklab, var(--color-blue-900) 50%, var(--ui-elevated));
-
-    --ui-ring: color-mix(in oklab, var(--color-blue-400) 60%, transparent);
-    --ui-shadow: 4px 4px 0 rgba(0,0,0,.45);
+    --ui-elevated: var(--color-slate-900);
+    --ui-bg-accented: color-mix(in oklab, var(--color-blue-900) 50%, var(--color-slate-900));
+    --ui-ring: color-mix(in oklab, var(--color-blue-400) 45%, transparent);
+    --ui-shadow: 0 1px 2px rgba(0,0,0,.5), 0 6px 16px rgba(0,0,0,.35);
   }
 
-  /* Controls/cards: sharper, stronger lines */
-  button, .btn, [role="button"] { border-radius: var(--ui-radius); }
+  /* Make buttons/inputs feel a bit more SLDS (compact + bordered) */
+  button, .btn, [role="button"] {
+    border-radius: var(--ui-radius);
+  }
   input, textarea, select, .card, .prose :where(table) {
     border-radius: var(--ui-radius);
-    border: 2px solid var(--ui-border);       /* bold outline */
-    box-shadow: var(--ui-shadow);             /* consistent hard shadow */
-  }
-
-  /* Links = confident primary */
-  a { color: var(--ui-primary); text-underline-offset: 2px; }
-  a:hover { text-decoration: underline; }
-
-  /* Crisp focus ring */
-  :focus-visible {
-    outline: none;
-    box-shadow: 0 0 0 3px var(--ui-ring), var(--ui-shadow);
+    border: 1px solid var(--ui-border);
   }
 }
