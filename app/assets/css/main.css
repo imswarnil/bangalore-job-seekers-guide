@@ -1,137 +1,192 @@
-@import "tailwindcss";
-@import "@nuxt/ui";
+/* ================================================
+   Bangalore Job Seekers Guide – UI Enhancements
+   Layered atop your SLDS-themed Nuxt UI tokens
+   ================================================ */
 
-/* Let Nuxt Content pick up prose tokens */
-@source "../../../content/**/*";
-
-/* =========================================================
-   SLDS-inspired Theme for Nuxt UI
-   - Brand (Primary): Salesforce Blue
-   - Neutrals: cool gray slate
-   - Success/Warning/Error: SLDS tokens
-   - Compact radius (4px), subtle borders/shadows
-   ========================================================= */
-@theme static {
-  /* Layout & Typography */
-  --container-8xl: 90rem;
-  --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
-
-  /* ---------- Brand / Primary: SLDS Blue ---------- */
-  /* Reference: #0176D3 (brand), #0B5CAB (dark), #032D60 (darker) */
-  --color-blue-50:  #EAF5FF;
-  --color-blue-100: #D8ECFF;
-  --color-blue-200: #B9DCFF;
-  --color-blue-300: #8CC3FF;
-  --color-blue-400: #59A8FF;
-  --color-blue-500: #1B96FF; /* light brand */
-  --color-blue-600: #0176D3; /* core brand */
-  --color-blue-700: #0B5CAB; /* brand dark */
-  --color-blue-800: #084C8A;
-  --color-blue-900: #053B70;
-  --color-blue-950: #032D60; /* brand darker */
-
-  /* ---------- Neutrals (cool gray) ---------- */
-  --color-slate-50:  #F3F6F9;
-  --color-slate-100: #E5EAEE;
-  --color-slate-200: #D8DDE6;
-  --color-slate-300: #C9CEDA;
-  --color-slate-400: #A8B2C7;
-  --color-slate-500: #919CB1;
-  --color-slate-600: #6B7C93;
-  --color-slate-700: #4E5E78;
-  --color-slate-800: #394A64;
-  --color-slate-900: #2B3852;
-  --color-slate-950: #1F2A44;
-
-  /* ---------- Success (SLDS) ---------- */
-  --color-green-50:  #E6F4EA;
-  --color-green-100: #CDEAD6;
-  --color-green-200: #A4DDB7;
-  --color-green-300: #76C98F;
-  --color-green-400: #3FAD68;
-  --color-green-500: #2E844A; /* SLDS success */
-  --color-green-600: #226B39;
-  --color-green-700: #1B5A31;
-  --color-green-800: #154A29;
-  --color-green-900: #0F3C22;
-  --color-green-950: #0A2E1B;
-
-  /* ---------- Warning (SLDS) ---------- */
-  --color-yellow-50:  #FFF4E5;
-  --color-yellow-100: #FFE6C7;
-  --color-yellow-200: #FFD29A;
-  --color-yellow-300: #FFB864;
-  --color-yellow-400: #FF9736;
-  --color-yellow-500: #DD7A01; /* SLDS warning (orange) */
-  --color-yellow-600: #B56203;
-  --color-yellow-700: #8F4E03;
-  --color-yellow-800: #6F3D02;
-  --color-yellow-900: #522F02;
-  --color-yellow-950: #3B2201;
-
-  /* ---------- Error (SLDS) ---------- */
-  --color-red-50:  #FDECEE;
-  --color-red-100: #F9D2D6;
-  --color-red-200: #F3A9B0;
-  --color-red-300: #EA7C88;
-  --color-red-400: #D65766;
-  --color-red-500: #BA0517; /* SLDS error */
-  --color-red-600: #93040F;
-  --color-red-700: #74030C;
-  --color-red-800: #5A0209;
-  --color-red-900: #3F0106;
-  --color-red-950: #2A0004;
-}
-
-/* Container width for your docs */
-:root {
-  --ui-container: var(--container-8xl);
-}
-
-/* =========================================================
-   Nuxt UI Base Mapping / Tweaks
-   Nuxt UI auto-maps --color-* to --ui-color-*, but we’ll also
-   tune radius, borders, and surface colors to feel like SLDS.
-   ========================================================= */
+/* ---------- Semantic Accents (city vibe) ---------- */
 @layer base {
   :root, .light {
-    /* Primary = SLDS brand blue */
-    --ui-primary: var(--color-blue-600);
+    --accent-1: #14B8A6; /* Metro-teal */
+    --accent-2: #16A34A; /* Namma green */
+    --accent-3: #F59E0B; /* Auto-rickshaw yellow */
+    --muted-fg: color-mix(in oklab, var(--color-slate-700) 85%, #0000);
+    --muted-fg-strong: var(--color-slate-800);
 
-    /* Radius: SLDS = compact corners (~4px) */
-    --ui-radius: .25rem;
-    --ui-radius-sm: .25rem;
-    --ui-radius-md: .25rem;
-    --ui-radius-lg: .375rem;
-
-    /* Subtle borders on cards/inputs (light mode) */
-    --ui-border: color-mix(in oklab, var(--color-slate-300) 70%, transparent);
-    --ui-bg: #ffffff;
-    --ui-elevated: #ffffff;
-    --ui-bg-accented: color-mix(in oklab, var(--color-blue-50) 30%, #fff);
-    --ui-ring: color-mix(in oklab, var(--color-blue-600) 40%, transparent);
-    --ui-shadow: 0 1px 2px rgba(3, 45, 96, 0.06), 0 3px 8px rgba(3,45,96,.05);
+    /* Hero gradients */
+    --hero-from: color-mix(in oklab, var(--color-blue-600) 30%, #ffffff);
+    --hero-to:   color-mix(in oklab, var(--color-slate-100) 80%, #ffffff);
   }
-
   .dark {
-    /* Primary slightly lighter in dark for contrast */
-    --ui-primary: var(--color-blue-500);
+    --accent-1: #2DD4BF;
+    --accent-2: #22C55E;
+    --accent-3: #FBBF24;
+    --muted-fg: color-mix(in oklab, var(--color-slate-300) 75%, #0000);
+    --muted-fg-strong: var(--color-slate-200);
 
-    /* Neutral surfaces in dark */
-    --ui-border: color-mix(in oklab, var(--color-slate-800) 85%, transparent);
-    --ui-bg: var(--color-slate-950);
-    --ui-elevated: var(--color-slate-900);
-    --ui-bg-accented: color-mix(in oklab, var(--color-blue-900) 50%, var(--color-slate-900));
-    --ui-ring: color-mix(in oklab, var(--color-blue-400) 45%, transparent);
-    --ui-shadow: 0 1px 2px rgba(0,0,0,.5), 0 6px 16px rgba(0,0,0,.35);
+    --hero-from: color-mix(in oklab, var(--color-blue-900) 70%, #000);
+    --hero-to:   color-mix(in oklab, var(--color-slate-900) 85%, #000);
+  }
+}
+
+/* ---------- Hero (landing) ---------- */
+@layer components {
+  .hero--blr {
+    position: relative;
+    isolation: isolate;
+    background: linear-gradient(180deg, var(--hero-from), var(--hero-to));
+    border-radius: 1.25rem;
+    box-shadow: 0 1px 2px rgba(3,45,96,.05), 0 16px 40px rgba(3,45,96,.08);
+  }
+  .hero--blr::after {
+    content: "";
+    position: absolute; inset: 0; z-index: -1;
+    background:
+      radial-gradient(1200px 300px at 20% -10%, color-mix(in oklab, var(--accent-1) 18%, #0000), #0000 60%),
+      radial-gradient(900px 260px at 80% 0%, color-mix(in oklab, var(--accent-2) 14%, #0000), #0000 60%);
+    opacity: .65;
+    pointer-events: none;
   }
 
-  /* Make buttons/inputs feel a bit more SLDS (compact + bordered) */
-  button, .btn, [role="button"] {
-    border-radius: var(--ui-radius);
+  /* Section header */
+  .section--head {
+    display: grid;
+    gap: .5rem;
+    margin-bottom: 1.25rem;
   }
-  input, textarea, select, .card, .prose :where(table) {
-    border-radius: var(--ui-radius);
+  .section--eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: .5rem;
+    font-size: .75rem;
+    font-weight: 600;
+    color: var(--muted-fg);
+    letter-spacing: .04em;
+    text-transform: uppercase;
+  }
+  .section--eyebrow::before {
+    content: "";
+    width: .5rem; height: .5rem; border-radius: 999px;
+    background: var(--accent-1);
+    box-shadow: 0 0 0 3px color-mix(in oklab, var(--accent-1) 20%, #0000);
+  }
+  .section--title {
+    font-size: clamp(1.25rem, 1.1rem + 1vw, 1.75rem);
+    font-weight: 650;
+    color: var(--muted-fg-strong);
+  }
+  .section--desc {
+    color: var(--muted-fg);
+  }
+
+  /* ---------- Chips / Badges ---------- */
+  .chip {
+    display: inline-flex; align-items: center; gap: .5rem;
+    padding: .35rem .6rem; border-radius: 999px;
+    background: color-mix(in oklab, var(--ui-bg) 70%, var(--accent-1));
+    border: 1px solid color-mix(in oklab, var(--accent-1) 25%, var(--ui-border));
+    color: color-mix(in oklab, var(--accent-1) 80%, #1a1a1a);
+    font-size: .75rem; font-weight: 600;
+  }
+  .chip--green {
+    background: color-mix(in oklab, var(--ui-bg) 70%, var(--accent-2));
+    border-color: color-mix(in oklab, var(--accent-2) 25%, var(--ui-border));
+    color: color-mix(in oklab, var(--accent-2) 85%, #1a1a1a);
+  }
+  .chip--amber {
+    background: color-mix(in oklab, var(--ui-bg) 70%, var(--accent-3));
+    border-color: color-mix(in oklab, var(--accent-3) 30%, var(--ui-border));
+    color: color-mix(in oklab, var(--accent-3) 90%, #1a1a1a);
+  }
+
+  /* ---------- Job Card ---------- */
+  .job-card {
+    display: grid; grid-template-columns: auto 1fr auto; gap: .85rem 1rem;
+    align-items: center;
+    padding: .9rem; border-radius: .5rem;
+    background: var(--ui-elevated);
     border: 1px solid var(--ui-border);
+    box-shadow: var(--ui-shadow);
+  }
+  .job-card__logo {
+    width: 42px; height: 42px; border-radius: .45rem; overflow: hidden;
+    display: grid; place-items: center;
+    background: color-mix(in oklab, var(--ui-bg) 75%, var(--color-slate-200));
+    border: 1px solid color-mix(in oklab, var(--ui-border) 70%, #0000);
+  }
+  .job-card__meta {
+    display: flex; flex-wrap: wrap; gap: .4rem .6rem; align-items: center;
+    color: var(--muted-fg);
+    font-size: .82rem;
+  }
+  .job-card__title {
+    font-weight: 650; line-height: 1.2;
+    color: var(--muted-fg-strong);
+  }
+  .job-card__cta .u-button, .job-card__cta button {
+    --ui-primary: var(--accent-2);
+  }
+  .job-card__salary { font-weight: 650; color: var(--accent-2); }
+  .job-card__loc    { display: inline-flex; gap: .35rem; align-items: center; }
+  .job-card__tags   { display: flex; flex-wrap: wrap; gap: .4rem; margin-top: .25rem; }
+
+  /* ---------- Company Row (compact list) ---------- */
+  .company-row {
+    display: grid; grid-template-columns: auto 1fr auto; gap: .75rem 1rem; align-items: center;
+    padding: .75rem .9rem; border-bottom: 1px dashed var(--ui-border);
+  }
+  .company-row__meta { color: var(--muted-fg); font-size: .82rem; }
+
+  /* ---------- Timeline (interview prep / steps) ---------- */
+  .timeline {
+    position: relative; display: grid; gap: 1rem;
+  }
+  .timeline::before {
+    content: ""; position: absolute; left: .9rem; top: .25rem; bottom: .25rem; width: 2px;
+    background: color-mix(in oklab, var(--accent-1) 35%, var(--ui-border));
+  }
+  .timeline__item { display: grid; grid-template-columns: 2rem 1fr; gap: .75rem; }
+  .timeline__dot {
+    width: 1rem; height: 1rem; border-radius: 999px; margin-top: .2rem;
+    background: var(--accent-1);
+    box-shadow: 0 0 0 4px color-mix(in oklab, var(--accent-1) 20%, #0000);
+  }
+  .timeline__title { font-weight: 600; color: var(--muted-fg-strong); }
+  .timeline__desc  { color: var(--muted-fg); font-size: .92rem; }
+
+  /* ---------- CTA Banner ---------- */
+  .cta--hire {
+    border-radius: .75rem; overflow: hidden; position: relative; isolation: isolate;
+    background: linear-gradient(135deg, color-mix(in oklab, var(--accent-2) 20%, var(--ui-bg)), var(--ui-bg));
+    border: 1px solid color-mix(in oklab, var(--accent-2) 28%, var(--ui-border));
+    box-shadow: var(--ui-shadow);
+  }
+  .cta--hire::after {
+    content:""; position:absolute; inset:-30% -10% auto -10%; height: 70%;
+    background: radial-gradient(closest-side, color-mix(in oklab, var(--accent-3) 28%, #0000), #0000 60%);
+    opacity:.55; pointer-events:none;
+  }
+
+  /* ---------- Utilities ---------- */
+  .soft-border { border: 1px solid var(--ui-border); border-radius: .5rem; }
+  .muted      { color: var(--muted-fg); }
+  .ring-accent { box-shadow: 0 0 0 3px color-mix(in oklab, var(--accent-1) 40%, #0000); border-radius: .5rem; }
+}
+
+/* ---------- Prose polish (Nuxt Content) ---------- */
+@layer components {
+  .prose .lead { color: var(--muted-fg); }
+  .prose h2, .prose h3 { scroll-margin-top: 6rem; }
+  .prose code { border-radius: .35rem; border: 1px solid var(--ui-border); background: color-mix(in oklab, var(--ui-bg) 86%, #0000); }
+  .prose blockquote {
+    border-left: 3px solid var(--accent-1);
+    background: color-mix(in oklab, var(--ui-bg) 92%, #0000);
+  }
+}
+
+/* ---------- Responsive tweaks ---------- */
+@layer utilities {
+  @media (max-width: 640px) {
+    .job-card { grid-template-columns: auto 1fr; }
+    .job-card__cta { grid-column: 1 / -1; justify-self: start; margin-top: .25rem; }
   }
 }
