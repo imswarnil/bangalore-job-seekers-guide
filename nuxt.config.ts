@@ -25,6 +25,8 @@ export default defineNuxtConfig({
     }
   },
 
+  components: [{ path: '~/components', pathPrefix: false }],
+
   compatibilityDate: '2024-07-11',
 
   nitro: {
