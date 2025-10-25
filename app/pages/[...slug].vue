@@ -91,16 +91,20 @@ const links = computed(() => {
 
       <UContentSurround :surround="surround" />
     </UPageBody>
-
-    <!-- Bottom Leaderboard Ad -->
-    <div class="my-10 px-4 sm:px-6 lg:px-8">
-      <div
-        class="rounded-xl border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 p-4 flex justify-center items-center"
-      >
-        <AdsPlaceholder variant="leaderboard" label="Sponsored" badge="Ad" />
-      </div>
-    </div>
-
+    
+    <!-- Sidebar Ad -->
+          <div class="hidden lg:block mt-8 p-4 border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 rounded-lg">
+            <ClientOnly>
+              <GoogleAd
+                ad-slot="7663977887"
+                ad-format="auto"
+                :fullWidth="true"
+                ins-style="display:block"
+                :refreshKey="page?.updatedAt || page?.path"
+              />
+            </ClientOnly>
+          </div>
+   
     <!-- Right Sidebar TOC + Ads -->
     <template v-if="page?.body?.toc?.links?.length" #right>
       <UContentToc
