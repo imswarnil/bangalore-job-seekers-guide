@@ -71,6 +71,18 @@ Build professional documentation with Nuxt UI's powerful components, enhanced ty
   :::
 ::
 
+<div class="hidden lg:block mt-8 p-4 border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 rounded-lg">
+            <ClientOnly>
+              <GoogleAd
+                ad-slot="7663977887"
+                ad-format="auto"
+                :fullWidth="true"
+                ins-style="display:block"
+                :refreshKey="page?.updatedAt || page?.path"
+              />
+            </ClientOnly>
+          </div>
+
 ::u-page-section{class="dark:bg-neutral-950"}
 #title
 Powered by Nuxt UI components
