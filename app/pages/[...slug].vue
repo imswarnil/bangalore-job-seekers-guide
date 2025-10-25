@@ -88,10 +88,9 @@ const links = computed(() => {
         :value="page"
       />
       <USeparator v-if="surround?.length" />
-
       <UContentSurround :surround="surround" />
     </UPageBody>
-    
+
     <!-- Sidebar Ad -->
           <div class="hidden lg:block mt-8 p-4 border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 rounded-lg">
             <ClientOnly>
@@ -117,6 +116,23 @@ const links = computed(() => {
             :class="{ '!mt-6': page.body?.toc?.links?.length }"
           >
             <USeparator
+              v-if="page.body?.toc?.links?.length"
+              type="dashed"
+            />
+
+            <div class="hidden lg:block mt-8 p-4 border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 rounded-lg">
+            <ClientOnly>
+              <GoogleAd
+                ad-slot="7663977887"
+                ad-format="auto"
+                :fullWidth="true"
+                ins-style="display:block"
+                :refreshKey="page?.updatedAt || page?.path"
+              />
+            </ClientOnly>
+          </div>
+
+          <USeparator
               v-if="page.body?.toc?.links?.length"
               type="dashed"
             />
