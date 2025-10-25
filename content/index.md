@@ -262,6 +262,3 @@ Enhanced with Nuxt Content
   :stars-bg
   :::
 ::
-
-::Timeline::
-
