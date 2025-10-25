@@ -261,3 +261,22 @@ Enhanced with Nuxt Content
   :stars-bg
   :::
 ::
+
+
+::HeroSplit{image="/img/crma-hero.png" imageAlt="CRM Analytics" class="dark:bg-neutral-950 from-neutral-900 to-neutral-950" reverse=true}
+#title
+Your Data, Your Superpower.
+
+#description
+Build dashboards, lenses, and stories that your CFO will *actually* show off. CRM Analytics, but cinematic.
+
+#links
+  :::u-button
+  ---
+  to: /getting-started
+  size: lg
+  trailing-icon: i-lucide-arrow-right
+  ---
+  Start Learning
+  :::
+::
