@@ -15,39 +15,23 @@ export default defineNuxtConfig({
 
   css: ['~/assets/css/main.css'],
 
-  /**
-   * ✅ Content config
-   * - Move MDC + TOC to the correct place (`content.markdown`)
-   * - Keep TOC depth = 1 as you had (formerly `searchDepth` in older examples)
-   */
   content: {
-    markdown: {
-      mdc: true,
-      toc: { depth: 1 }
+    build: {
+      markdown: {
+        toc: {
+          searchDepth: 1
+        }
+      }
     }
-  },
-
-  /**
-   * ✅ Auto-import components without folder prefixes
-   * This lets you use `::HomeHero` instead of `::SectionsHomeHero`.
-   */
-  components: [
-    { path: '~/components', pathPrefix: false }
-  ],
-
-  /**
-   * (Optional but harmless) Basic image defaults so <NuxtImg> "just works"
-   */
-  image: {
-    // default provider is 'ipx'; keep defaults for simplicity
-    format: ['webp', 'avif', 'jpeg']
   },
 
   compatibilityDate: '2024-07-11',
 
   nitro: {
     prerender: {
-      routes: ['/'],
+      routes: [
+        '/'
+      ],
       crawlLinks: true,
       autoSubfolderIndex: false
     }
@@ -64,14 +48,6 @@ export default defineNuxtConfig({
 
   icon: {
     provider: 'iconify'
-  },
-
-  /**
-   * (Optional) Sensible defaults for OG image generation
-   * Keeps your existing module working without extra config.
-   */
-  ogImage: {
-    // Leave empty to use module defaults; add presets later if needed
   },
 
   llms: {
