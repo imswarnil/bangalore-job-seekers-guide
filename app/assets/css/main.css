@@ -91,7 +91,7 @@
 /* =========================================================
    Nuxt UI Base Mapping / Tweaks
    Nuxt UI auto-maps --color-* to --ui-color-*, but we’ll also
-   tune radius, borders, and surface colors to feel like SLDS.
+   tune radius, borders, surface, links, and focus rings.
    ========================================================= */
 @layer base {
   :root, .light {
@@ -111,6 +111,9 @@
     --ui-bg-accented: color-mix(in oklab, var(--color-blue-50) 30%, #fff);
     --ui-ring: color-mix(in oklab, var(--color-blue-600) 40%, transparent);
     --ui-shadow: 0 1px 2px rgba(3, 45, 96, 0.06), 0 3px 8px rgba(3,45,96,.05);
+
+    /* Helpful alias for Tailwind ‘text-primary’ */
+    --color-primary: var(--ui-primary);
   }
 
   .dark {
@@ -126,6 +129,11 @@
     --ui-shadow: 0 1px 2px rgba(0,0,0,.5), 0 6px 16px rgba(0,0,0,.35);
   }
 
+  /* Typography + links */
+  html { font-family: var(--font-sans); }
+  a { color: var(--ui-primary); text-underline-offset: 2px; }
+  a:hover { text-decoration: underline; }
+
   /* Make buttons/inputs feel a bit more SLDS (compact + bordered) */
   button, .btn, [role="button"] {
     border-radius: var(--ui-radius);
@@ -133,5 +141,232 @@
   input, textarea, select, .card, .prose :where(table) {
     border-radius: var(--ui-radius);
     border: 1px solid var(--ui-border);
+  }
+
+  /* Focus ring consistent with tokens */
+  :focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 3px var(--ui-ring);
+    border-radius: .375rem;
+  }
+
+  /* Tailwind utility escape hatch if needed */
+  .text-primary { color: var(--ui-primary) !important; }
+}
+
+/* =========================================================
+   Bangalore Job Seekers Guide – UI Enhancements
+   (City accents, hero, sections, chips, job cards, timeline, CTA)
+   ========================================================= */
+@layer components {
+  /* ---------- Semantic Accents (city vibe) ---------- */
+  :root, .light {
+    --accent-1: #14B8A6; /* Metro-teal */
+    --accent-2: #16A34A; /* Namma green */
+    --accent-3: #F59E0B; /* Auto-rickshaw yellow */
+    --muted-fg: color-mix(in oklab, var(--color-slate-700) 85%, #0000);
+    --muted-fg-strong: var(--color-slate-900);
+
+    --hero-from: color-mix(in oklab, var(--color-blue-600) 30%, #ffffff);
+    --hero-to:   color-mix(in oklab, var(--color-slate-100) 80%, #ffffff);
+  }
+  .dark {
+    --accent-1: #2DD4BF;
+    --accent-2: #22C55E;
+    --accent-3: #FBBF24;
+    --muted-fg: color-mix(in oklab, var(--color-slate-300) 75%, #0000);
+    --muted-fg-strong: var(--color-slate-100);
+
+    --hero-from: color-mix(in oklab, var(--color-blue-900) 70%, #000);
+    --hero-to:   color-mix(in oklab, var(--color-slate-900) 85%, #000);
+  }
+
+  /* ---------- Hero (landing) ---------- */
+  .hero--blr {
+    position: relative;
+    isolation: isolate;
+    background: linear-gradient(180deg, var(--hero-from), var(--hero-to));
+    border-radius: 1.25rem;
+    box-shadow: 0 1px 2px rgba(3,45,96,.05), 0 16px 40px rgba(3,45,96,.08);
+  }
+  .hero--blr::after {
+    content: "";
+    position: absolute; inset: 0; z-index: -1;
+    background:
+      radial-gradient(1200px 300px at 20% -10%, color-mix(in oklab, var(--accent-1) 18%, #0000), #0000 60%),
+      radial-gradient(900px 260px at 80% 0%, color-mix(in oklab, var(--accent-2) 14%, #0000), #0000 60%);
+    opacity: .65;
+    pointer-events: none;
+  }
+
+  /* ---------- Section header ---------- */
+  .section--head {
+    display: grid;
+    gap: .5rem;
+    margin-bottom: 1.25rem;
+  }
+  .section--eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: .5rem;
+    font-size: .75rem;
+    font-weight: 600;
+    color: var(--muted-fg);
+    letter-spacing: .04em;
+    text-transform: uppercase;
+  }
+  .section--eyebrow::before {
+    content: "";
+    width: .5rem; height: .5rem; border-radius: 999px;
+    background: var(--accent-1);
+    box-shadow: 0 0 0 3px color-mix(in oklab, var(--accent-1) 20%, #0000);
+  }
+  .section--title {
+    font-size: clamp(1.25rem, 1.1rem + 1vw, 1.75rem);
+    font-weight: 650;
+    color: var(--muted-fg-strong);
+  }
+  .section--desc {
+    color: var(--muted-fg);
+  }
+
+  /* ---------- Chips / Badges ---------- */
+  .chip {
+    display: inline-flex; align-items: center; gap: .5rem;
+    padding: .35rem .6rem; border-radius: 999px;
+    background: color-mix(in oklab, var(--ui-bg) 70%, var(--accent-1));
+    border: 1px solid color-mix(in oklab, var(--accent-1) 25%, var(--ui-border));
+    color: color-mix(in oklab, var(--accent-1) 80%, #1a1a1a);
+    font-size: .75rem; font-weight: 600;
+  }
+  .chip--green {
+    background: color-mix(in oklab, var(--ui-bg) 70%, var(--accent-2));
+    border-color: color-mix(in oklab, var(--accent-2) 25%, var(--ui-border));
+    color: color-mix(in oklab, var(--accent-2) 85%, #1a1a1a);
+  }
+  .chip--amber {
+    background: color-mix(in oklab, var(--ui-bg) 70%, var(--accent-3));
+    border-color: color-mix(in oklab, var(--accent-3) 30%, var(--ui-border));
+    color: color-mix(in oklab, var(--accent-3) 90%, #1a1a1a);
+  }
+
+  /* ---------- Job Card ---------- */
+  .job-card {
+    display: grid; grid-template-columns: auto 1fr auto; gap: .85rem 1rem;
+    align-items: center;
+    padding: .9rem; border-radius: .5rem;
+    background: var(--ui-elevated);
+    border: 1px solid var(--ui-border);
+    box-shadow: var(--ui-shadow);
+  }
+  .job-card__logo {
+    width: 42px; height: 42px; border-radius: .45rem; overflow: hidden;
+    display: grid; place-items: center;
+    background: color-mix(in oklab, var(--ui-bg) 75%, var(--color-slate-200));
+    border: 1px solid color-mix(in oklab, var(--ui-border) 70%, #0000);
+  }
+  .job-card__meta {
+    display: flex; flex-wrap: wrap; gap: .4rem .6rem; align-items: center;
+    color: var(--muted-fg);
+    font-size: .82rem;
+  }
+  .job-card__title {
+    font-weight: 650; line-height: 1.2;
+    color: var(--muted-fg-strong);
+  }
+  .job-card__cta .u-button, .job-card__cta button {
+    --ui-primary: var(--accent-2);
+  }
+  .job-card__salary { font-weight: 650; color: var(--accent-2); }
+  .job-card__loc    { display: inline-flex; gap: .35rem; align-items: center; }
+  .job-card__tags   { display: flex; flex-wrap: wrap; gap: .4rem; margin-top: .25rem; }
+
+  /* ---------- Company Row (compact list) ---------- */
+  .company-row {
+    display: grid; grid-template-columns: auto 1fr auto; gap: .75rem 1rem; align-items: center;
+    padding: .75rem .9rem; border-bottom: 1px dashed var(--ui-border);
+  }
+  .company-row__meta { color: var(--muted-fg); font-size: .82rem; }
+
+  /* ---------- Timeline (interview prep / steps) ---------- */
+  .timeline {
+    position: relative; display: grid; gap: 1rem;
+  }
+  .timeline::before {
+    content: ""; position: absolute; left: .9rem; top: .25rem; bottom: .25rem; width: 2px;
+    background: color-mix(in oklab, var(--accent-1) 35%, var(--ui-border));
+  }
+  .timeline__item { display: grid; grid-template-columns: 2rem 1fr; gap: .75rem; }
+  .timeline__dot {
+    width: 1rem; height: 1rem; border-radius: 999px; margin-top: .2rem;
+    background: var(--accent-1);
+    box-shadow: 0 0 0 4px color-mix(in oklab, var(--accent-1) 20%, #0000);
+  }
+  .timeline__title { font-weight: 600; color: var(--muted-fg-strong); }
+  .timeline__desc  { color: var(--muted-fg); font-size: .92rem; }
+
+  /* ---------- CTA Banner ---------- */
+  .cta--hire {
+    border-radius: .75rem; overflow: hidden; position: relative; isolation: isolate;
+    background: linear-gradient(135deg, color-mix(in oklab, var(--accent-2) 20%, var(--ui-bg)), var(--ui-bg));
+    border: 1px solid color-mix(in oklab, var(--accent-2) 28%, var(--ui-border));
+    box-shadow: var(--ui-shadow);
+  }
+  .cta--hire::after {
+    content:""; position:absolute; inset:-30% -10% auto -10%; height: 70%;
+    background: radial-gradient(closest-side, color-mix(in oklab, var(--accent-3) 28%, #0000), #0000 60%);
+    opacity:.55; pointer-events:none;
+  }
+
+  /* ---------- Ad Slot wrapper (optional) ---------- */
+  .ad-slot {
+    border: 1px dashed var(--ui-border);
+    border-radius: .75rem;
+    background: color-mix(in oklab, var(--ui-bg) 94%, #0000);
+    padding: 1rem;
+  }
+}
+
+/* =========================================================
+   Prose polish (Nuxt Content) + Code blocks
+   ========================================================= */
+@layer components {
+  .prose .lead { color: var(--muted-fg); }
+  .prose h2, .prose h3 { scroll-margin-top: 6rem; }
+  .prose code {
+    border-radius: .35rem;
+    border: 1px solid var(--ui-border);
+    background: color-mix(in oklab, var(--ui-bg) 86%, #0000);
+    padding: 0.15rem 0.35rem;
+  }
+  .prose pre code {
+    border: 0;
+    background: transparent;
+    padding: 0;
+  }
+  .prose blockquote {
+    border-left: 3px solid var(--accent-1);
+    background: color-mix(in oklab, var(--ui-bg) 92%, #0000);
+    padding: .75rem 1rem;
+    border-radius: .5rem;
+  }
+}
+
+/* =========================================================
+   Utilities & Responsive Tweaks
+   ========================================================= */
+@layer utilities {
+  .soft-border { border: 1px solid var(--ui-border); border-radius: .5rem; }
+  .muted      { color: var(--muted-fg); }
+  .ring-accent { box-shadow: 0 0 0 3px color-mix(in oklab, var(--accent-1) 40%, #0000); border-radius: .5rem; }
+
+  @media (max-width: 640px) {
+    .job-card { grid-template-columns: auto 1fr; }
+    .job-card__cta { grid-column: 1 / -1; justify-self: start; margin-top: .25rem; }
+  }
+
+  /* Smooth theme transitions */
+  .theme-transition * {
+    transition: background-color .25s ease, color .25s ease, border-color .25s ease, box-shadow .25s ease;
   }
 }
