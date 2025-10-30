@@ -23,13 +23,13 @@ useSeoMeta({
 
 <template>
   <UPage class="bg-white dark:bg-neutral-950">
-    <!-- Hero using Nuxt UI -->
+    <!-- HERO -->
     <UPageHero
       class="dark:bg-gradient-to-b from-neutral-950 to-neutral-900"
-      :ui="{ title: 'text-4xl sm:text-5xl font-bold tracking-tight', description: 'text-base sm:text-lg max-w-2xl' }"
-      title="Learn Salesforce CRM Analytics like you're editing a short film."
-      description="Docs + dashboards + CPQ + Bollywood-level masala. Built with Nuxt UI + Nuxt Content so you can ship fast and look dangerous."
+      title="CRM Analytics Academy"
+      description="Learn Salesforce Einstein Analytics / CRM Analytics with real Twilio-style dashboards, dataflows, and app builds. Film director energy, Salesforce depth."
       orientation="horizontal"
+      :ui="{ title: 'text-4xl sm:text-5xl font-bold tracking-tight', description: 'text-base sm:text-lg max-w-2xl' }"
     >
       <template #links>
         <UButton
@@ -38,47 +38,43 @@ useSeoMeta({
           icon="i-lucide-arrow-right"
           trailing
         >
-          Start learning
+          Start now
         </UButton>
-
         <UButton
-          to="https://youtube.com/@imswarnil"
-          target="_blank"
-          variant="outline"
+          to="/courses"
           size="xl"
+          variant="outline"
           icon="i-simple-icons-youtube"
         >
-          Watch channel
+          Watch lessons
         </UButton>
       </template>
 
       <template #right>
-        <UCard class="max-w-md bg-white/5 border-white/10 backdrop-blur dark:bg-neutral-900/40">
-          <p class="text-sm uppercase tracking-[0.25em] text-primary mb-3">
-            Swarnil's CRM Analytics Academy
-          </p>
-          <p class="text-sm text-muted-foreground dark:text-neutral-300 mb-4">
-            Real projects, India-first examples, Twilio-ish use cases. Not theory.
-          </p>
-          <ul class="space-y-2 text-sm">
-            <li class="flex items-center gap-2">
-              <UIcon name="i-lucide-check" class="text-green-500" />
-              Dataflows, dashboards, app templates
-            </li>
-            <li class="flex items-center gap-2">
-              <UIcon name="i-lucide-check" class="text-green-500" />
-              CPQ / .Org style scenarios
-            </li>
-            <li class="flex items-center gap-2">
-              <UIcon name="i-lucide-check" class="text-green-500" />
-              Monetization-ready (Ads / CTA / Courses)
-            </li>
-          </ul>
-        </UCard>
+        <!-- Dummy image / preview placeholder -->
+        <div class="academy-placeholder">
+          <div class="academy-placeholder__header">
+            <span class="dot bg-red-400" />
+            <span class="dot bg-yellow-400" />
+            <span class="dot bg-green-400" />
+          </div>
+          <div class="academy-placeholder__body">
+            <p class="text-xs uppercase tracking-wide text-slate-500 dark:text-slate-200 mb-1">
+              Dashboard Preview
+            </p>
+            <p class="text-sm font-semibold mb-4">
+              AE Pipeline — Org Pricing Overview
+            </p>
+            <div class="academy-placeholder__chart" />
+            <p class="text-[10px] text-slate-400 mt-3">
+              * dummy chart – replace with real analytics embed later
+            </p>
+          </div>
+        </div>
       </template>
     </UPageHero>
 
-    <!-- Small ads / banner area like you had -->
+    <!-- ADS (Yours) -->
     <div class="hidden lg:block mt-6 px-4">
       <ClientOnly>
         <GoogleAd
@@ -91,48 +87,112 @@ useSeoMeta({
       </ClientOnly>
     </div>
 
-    <!-- Feature strip using Nuxt UI -->
-    <UContainer class="py-12">
+    <!-- CURRICULUM -->
+    <UContainer class="py-12 space-y-10">
+      <div class="flex flex-col gap-2">
+        <p class="text-sm uppercase tracking-[0.25em] text-slate-500 dark:text-slate-300">
+          Program Curriculum
+        </p>
+        <h2 class="text-2xl font-semibold tracking-tight">
+          3 tracks — beginner to production
+        </h2>
+        <p class="text-slate-600 dark:text-slate-300 max-w-2xl">
+          Use this as the master outline. You can later map it to Supabase, “lessons” table, or your Ghost blog.
+        </p>
+      </div>
+
       <UPageGrid>
+        <!-- Track 1 -->
         <UCard>
           <div class="flex items-start gap-3">
-            <UIcon name="i-lucide-presentation" class="h-6 w-6 text-primary" />
+            <UIcon name="i-lucide-sparkles" class="h-6 w-6 text-[color:var(--ui-primary)]" />
             <div>
-              <h3 class="font-semibold">Project style lessons</h3>
-              <p class="text-sm text-muted-foreground">
-                Not “hello world”. Real Salesforce dashboards, Twilio-ish reporting.
+              <h3 class="font-semibold text-base">Track 1 · Foundations</h3>
+              <p class="text-sm text-slate-500 dark:text-slate-300 mb-3">
+                Week 0–2 · For people who only know “Salesforce = CRM”.
               </p>
             </div>
           </div>
+          <UAccordion :items="[
+            { label: 'Lesson 1: What is CRM Analytics?', content: 'Positioning vs Reports & Dashboards, vs Tableau, vs Data Cloud.' },
+            { label: 'Lesson 2: Datasets & Recipes', content: 'SAQL vs SOQL, joins, row-level security idea.' },
+            { label: 'Lesson 3: Lenses & Dashboards', content: 'Chart types, compact vs grouped vs compare tables.' },
+          ]" size="sm" />
         </UCard>
 
+        <!-- Track 2 -->
         <UCard>
           <div class="flex items-start gap-3">
-            <UIcon name="i-lucide-badge-indian-rupee" class="h-6 w-6 text-primary" />
+            <UIcon name="i-lucide-layers" class="h-6 w-6 text-[color:var(--ui-primary)]" />
             <div>
-              <h3 class="font-semibold">India-first, global-ready</h3>
-              <p class="text-sm text-muted-foreground">
-                Pricing, data and naming like we actually use here.
+              <h3 class="font-semibold text-base">Track 2 · App Builder</h3>
+              <p class="text-sm text-slate-500 dark:text-slate-300 mb-3">
+                Week 3–5 · Build real apps like Event Monitoring / Sales Analytics.
               </p>
             </div>
           </div>
+          <UAccordion :items="[
+            { label: 'Lesson 4: Dataflows & scheduling', content: 'Create, run, fix broken nodes, monitor.' },
+            { label: 'Lesson 5: Templates & App cloning', content: 'How Salesforce ships prebuilt apps and how to extend.' },
+            { label: 'Lesson 6: Embedding in Lightning', content: 'Wave dashboard component, filters from LWC.' },
+          ]" size="sm" />
         </UCard>
 
+        <!-- Track 3 -->
         <UCard>
           <div class="flex items-start gap-3">
-            <UIcon name="i-lucide-wand-2" class="h-6 w-6 text-primary" />
+            <UIcon name="i-lucide-bot" class="h-6 w-6 text-[color:var(--ui-primary)]" />
             <div>
-              <h3 class="font-semibold">Copy-paste sections</h3>
-              <p class="text-sm text-muted-foreground">
-                MDC blocks, CTAs, ads — straight into content.
+              <h3 class="font-semibold text-base">Track 3 · Advanced / Twilio-style</h3>
+              <p class="text-sm text-slate-500 dark:text-slate-300 mb-3">
+                Week 6–8 · Production dashboards for quoting, .Org pricing, PubSec-ish flows.
               </p>
             </div>
           </div>
+          <UAccordion :items="[
+            { label: 'Lesson 7: Case / Quote history dashboards', content: 'Multi-dataset, bindings, percent diff.' },
+            { label: 'Lesson 8: Row-level security (RLS)', content: 'User-based, role-based, account hierarchy.' },
+            { label: 'Lesson 9: Packaging & handoff', content: 'Move from sandbox → prod, document on Ghost.' },
+          ]" size="sm" />
         </UCard>
       </UPageGrid>
     </UContainer>
 
-    <!-- Now render your MDC content -->
+    <!-- TIMELINE -->
+    <UContainer class="pb-16">
+      <div class="flex flex-col gap-2 mb-6">
+        <p class="text-sm uppercase tracking-[0.25em] text-slate-500 dark:text-slate-300">
+          Learning timeline
+        </p>
+        <h2 class="text-2xl font-semibold tracking-tight">
+          8-week path to “I can demo this to my manager”
+        </h2>
+      </div>
+
+      <div class="academy-timeline">
+        <UCard v-for="item in [
+          { week: 'Week 0', title: 'Setup', desc: 'Dev org, CRM Analytics enabled, sample data.' },
+          { week: 'Week 1', title: 'Datasets', desc: 'Import, transform, recipes, RLS concept.' },
+          { week: 'Week 2', title: 'Dashboards', desc: 'Charts, pages, compact tables, filters.' },
+          { week: 'Week 3', title: 'Dataflows', desc: 'Build & schedule, fix the “not fetching” issue 😈.' },
+          { week: 'Week 4', title: 'Apps', desc: 'Event Monitoring-style app, extend components.' },
+          { week: 'Week 5', title: 'Embedding', desc: 'LWC, aura, page layouts, filters from URL.' },
+          { week: 'Week 6', title: 'Advanced', desc: 'Bindings, SAQL, compare tables, KPIs.' },
+          { week: 'Week 7–8', title: 'Capstone', desc: 'Build Twilio-ish AE dashboard and publish.' }
+        ]"
+        :key="item.week"
+        class="academy-timeline__card"
+        >
+          <p class="text-xs font-medium text-slate-500 dark:text-slate-200">{{ item.week }}</p>
+          <h3 class="text-sm font-semibold mb-1">{{ item.title }}</h3>
+          <p class="text-xs text-slate-500 dark:text-slate-300">
+            {{ item.desc }}
+          </p>
+        </UCard>
+      </div>
+    </UContainer>
+
+    <!-- ORIGINAL CONTENT (your MDC) -->
     <UContainer class="pb-16">
       <ContentRenderer
         v-if="page"
