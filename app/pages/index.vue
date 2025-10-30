@@ -1,351 +1,328 @@
-<script setup lang="ts">
-const { data: page } = await useAsyncData('index', () =>
-  queryCollection('landing').path('/').first()
-)
-
-if (!page.value) {
-  throw createError({ statusCode: 404, statusMessage: 'Page not found', fatal: true })
-}
-
-const title = page.value.seo?.title || page.value.title || 'CRM Analytics Academy'
-const description =
-  page.value.seo?.description ||
-  page.value.description ||
-  'Learn Salesforce CRM / Einstein Analytics with a structured curriculum.'
-
-useSeoMeta({
-  titleTemplate: '',
-  title,
-  ogTitle: title,
-  description,
-  ogDescription: description
-})
-</script>
-
 <template>
-  <div class="min-h-screen bg-white dark:bg-neutral-950">
+  <main class="min-h-screen bg-white text-slate-900">
     <!-- 1. HERO -->
-    <section class="py-14 md:py-20 bg-gradient-to-b from-white to-slate-50 dark:from-neutral-950 dark:to-neutral-900">
-      <UContainer>
-        <div class="grid gap-10 md:grid-cols-2 items-center">
-          <div class="space-y-5">
-            <p class="text-[11px] uppercase tracking-[0.35em] text-slate-500 dark:text-slate-300">
-              CRM Analytics Academy
-            </p>
-            <h1 class="text-4xl md:text-5xl font-bold tracking-tight text-slate-900 dark:text-white leading-tight">
-              Salesforce CRM Analytics for builders, admins and creators.
-            </h1>
-            <p class="text-slate-600 dark:text-slate-300 text-base md:text-lg max-w-xl">
-              Learn Einstein / CRM Analytics the way you actually work: datasets → dashboards → dataflows → embedding →
-              Twilio-style internal apps.
-            </p>
-            <div class="flex flex-wrap gap-4">
-              <UButton to="/" size="lg">Start here</UButton>
-              <UButton
-                to="https://youtube.com/@imswarnil"
-                target="_blank"
-                variant="outline"
-                size="lg"
+    <section class="relative overflow-hidden border-b border-slate-200 bg-gradient-to-b from-white to-slate-50">
+      <div class="mx-auto max-w-6xl px-4 py-16 lg:flex lg:items-center lg:gap-10">
+        <div class="flex-1 space-y-6">
+          <p class="inline-flex items-center gap-2 rounded-full bg-slate-100 px-3 py-1 text-xs font-medium text-slate-700">
+            <span class="h-2 w-2 rounded-full bg-emerald-500"></span>
+            New: Bangalore Job Seekers Guide · LMS Style
+          </p>
+          <h1 class="text-3xl font-bold tracking-tight sm:text-4xl lg:text-5xl">
+            Learn. Build. Get Hired in Bangalore.
+          </h1>
+          <p class="max-w-2xl text-base text-slate-600 md:text-lg">
+            This is your all-in-one playbook — getting started, portfolio, city hacks, interviews, even survival kit. No algos, just your story.
+          </p>
+          <div class="flex flex-wrap gap-4">
+            <NuxtLink
+              to="/getting-started"
+              class="inline-flex items-center gap-2 rounded-lg bg-slate-900 px-5 py-2.5 text-sm font-medium text-white hover:bg-slate-800"
+            >
+              Start Learning
+              <span aria-hidden="true">→</span>
+            </NuxtLink>
+            <NuxtLink
+              to="/docs"
+              class="inline-flex items-center gap-2 rounded-lg bg-slate-100 px-5 py-2.5 text-sm font-medium text-slate-800 hover:bg-slate-200"
+            >
+              Browse Docs
+            </NuxtLink>
+          </div>
+          <div class="flex items-center gap-4 text-xs text-slate-500">
+            <div class="flex -space-x-1">
+              <span class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-slate-200 text-xs font-semibold text-slate-700">S</span>
+              <span class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-slate-200 text-xs font-semibold text-slate-700">W</span>
+              <span class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-slate-200 text-xs font-semibold text-slate-700">G</span>
+            </div>
+            <p>Trusted by 1,000+ job seekers & makers</p>
+          </div>
+        </div>
+
+        <div class="mt-10 flex-1 lg:mt-0">
+          <div class="rounded-2xl border border-slate-200 bg-white/80 shadow-sm backdrop-blur">
+            <div class="border-b border-slate-200 px-6 py-4">
+              <p class="text-xs font-medium uppercase tracking-wide text-slate-500">Your Learning Dashboard</p>
+            </div>
+            <div class="space-y-4 p-6">
+              <div class="flex items-center justify-between gap-4">
+                <div>
+                  <p class="text-sm font-semibold text-slate-700">1 — Getting Started</p>
+                  <p class="text-xs text-slate-500">Nuxt content folder: <code>/content/1-getting-started</code></p>
+                </div>
+                <span class="rounded-full bg-emerald-100 px-3 py-1 text-xs font-semibold text-emerald-700">
+                  Ready
+                </span>
+              </div>
+              <div class="flex items-center justify-between gap-4">
+                <div>
+                  <p class="text-sm font-semibold text-slate-700">2 — Move to Bangalore</p>
+                  <p class="text-xs text-slate-500">Areas, PG, transport</p>
+                </div>
+                <span class="rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-700">
+                  Soon
+                </span>
+              </div>
+              <div class="flex items-center justify-between gap-4">
+                <div>
+                  <p class="text-sm font-semibold text-slate-700">3 — Portfolio / GitHub</p>
+                  <p class="text-xs text-slate-500">For Software + Content creator</p>
+                </div>
+                <span class="rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-700">
+                  Soon
+                </span>
+              </div>
+              <NuxtLink
+                to="/getting-started"
+                class="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-slate-900 px-4 py-2.5 text-sm font-medium text-white hover:bg-slate-800"
               >
-                Watch on YouTube
-              </UButton>
+                Continue from “Getting Started”
+              </NuxtLink>
             </div>
-            <p class="text-xs text-slate-400 dark:text-slate-500">
-              No algorithm drama. Just structured learning. Add your ads later. 😌
-            </p>
-          </div>
-
-          <!-- right block -->
-          <div
-            class="rounded-xl border border-slate-200/70 dark:border-slate-800/70 bg-white/80 dark:bg-neutral-900/40 backdrop-blur p-4 md:p-5 shadow-sm"
-          >
-            <p class="text-[10px] uppercase tracking-wide text-slate-400 dark:text-slate-200 mb-2">
-              Sample dashboard
-            </p>
-            <p class="text-sm font-semibold text-slate-900 dark:text-white mb-4">
-              AE Pipeline — Org Pricing Overview
-            </p>
-            <div class="h-28 rounded-md bg-gradient-to-tr from-sky-500/60 to-sky-200/20 relative overflow-hidden">
-              <div
-                class="absolute inset-0 bg-[linear-gradient(90deg,rgba(255,255,255,.35)_1px,transparent_1px)] bg-[length:20px_100%]"
-              />
-            </div>
-            <p class="text-[10px] text-slate-400 dark:text-slate-500 mt-3">
-              * plug real Einstein / CRM Analytics embed here
-            </p>
           </div>
         </div>
-      </UContainer>
+      </div>
     </section>
 
-    <!-- 2. METRICS / WHY -->
-    <section class="py-6">
-      <UContainer>
-        <div class="grid gap-4 md:grid-cols-4">
-          <div class="p-4 rounded-lg bg-slate-50 dark:bg-neutral-900/50 border border-slate-100 dark:border-slate-800">
-            <p class="text-3xl font-semibold text-slate-900 dark:text-white">8 weeks</p>
-            <p class="text-xs text-slate-500 dark:text-slate-300 mt-1">structured progression</p>
+    <!-- 2. STATS / SOCIAL PROOF -->
+    <section class="bg-white py-10">
+      <div class="mx-auto max-w-6xl px-4">
+        <div class="grid gap-6 md:grid-cols-4">
+          <div class="rounded-2xl border border-slate-200 bg-slate-50/50 p-5 text-center">
+            <p class="text-3xl font-bold text-slate-900">10+</p>
+            <p class="text-xs text-slate-500">Learning Tracks</p>
           </div>
-          <div class="p-4 rounded-lg bg-slate-50 dark:bg-neutral-900/50 border border-slate-100 dark:border-slate-800">
-            <p class="text-3xl font-semibold text-slate-900 dark:text-white">3 tracks</p>
-            <p class="text-xs text-slate-500 dark:text-slate-300 mt-1">foundations · builder · advanced</p>
+          <div class="rounded-2xl border border-slate-200 bg-slate-50/50 p-5 text-center">
+            <p class="text-3xl font-bold text-slate-900">Bangalore</p>
+            <p class="text-xs text-slate-500">Local playbook</p>
           </div>
-          <div class="p-4 rounded-lg bg-slate-50 dark:bg-neutral-900/50 border border-slate-100 dark:border-slate-800">
-            <p class="text-3xl font-semibold text-slate-900 dark:text-white">SF context</p>
-            <p class="text-xs text-slate-500 dark:text-slate-300 mt-1">Einstein / CRM Analytics specific</p>
+          <div class="rounded-2xl border border-slate-200 bg-slate-50/50 p-5 text-center">
+            <p class="text-3xl font-bold text-slate-900">YouTube</p>
+            <p class="text-xs text-slate-500">Docs + video friendly</p>
           </div>
-          <div class="p-4 rounded-lg bg-slate-50 dark:bg-neutral-900/50 border border-slate-100 dark:border-slate-800">
-            <p class="text-3xl font-semibold text-slate-900 dark:text-white">Nuxt</p>
-            <p class="text-xs text-slate-500 dark:text-slate-300 mt-1">docs-first, SEO-first</p>
+          <div class="rounded-2xl border border-slate-200 bg-slate-50/50 p-5 text-center">
+            <p class="text-3xl font-bold text-slate-900">Ghost</p>
+            <p class="text-xs text-slate-500">Newsletter ready</p>
           </div>
         </div>
-      </UContainer>
+      </div>
     </section>
 
-    <!-- 3. WHO IS THIS FOR -->
-    <section class="py-10">
-      <UContainer>
-        <div class="grid gap-6 md:grid-cols-3">
-          <UCard>
-            <h3 class="text-base font-semibold text-slate-900 dark:text-white mb-2">Admins</h3>
-            <p class="text-sm text-slate-500 dark:text-slate-300">
-              Need to enable CRM Analytics in orgs, manage dataflows, and show value to business.
-            </p>
-          </UCard>
-          <UCard>
-            <h3 class="text-base font-semibold text-slate-900 dark:text-white mb-2">Builders / Devs</h3>
-            <p class="text-sm text-slate-500 dark:text-slate-300">
-              Want to embed dashboards in Lightning, LWC, or build Twilio-style internal analytics.
-            </p>
-          </UCard>
-          <UCard>
-            <h3 class="text-base font-semibold text-slate-900 dark:text-white mb-2">Creators / Trainers</h3>
-            <p class="text-sm text-slate-500 dark:text-slate-300">
-              Want to publish Salesforce analytics content with structure (YouTube, Ghost, LMS).
-            </p>
-          </UCard>
-        </div>
-      </UContainer>
-    </section>
-
-    <!-- 4. 3-PHASE CURRICULUM -->
-    <section class="py-12 md:py-16">
-      <UContainer class="space-y-8">
-        <div>
-          <p class="text-xs uppercase tracking-[0.3em] text-slate-500 dark:text-slate-300">
-            Curriculum
-          </p>
-          <h2 class="text-2xl md:text-3xl font-semibold tracking-tight text-slate-900 dark:text-white mt-2">
-            3 phases → beginner to production
-          </h2>
-        </div>
-
-        <div class="grid gap-6 md:grid-cols-3">
-          <UCard>
-            <h3 class="text-base font-semibold text-slate-900 dark:text-white mb-2">Phase 1 · Foundations</h3>
-            <ul class="space-y-2 text-sm text-slate-600 dark:text-slate-300">
-              <li>• What is CRM / Einstein Analytics</li>
-              <li>• Datasets & recipes</li>
-              <li>• Lenses & dashboards</li>
-            </ul>
-          </UCard>
-          <UCard>
-            <h3 class="text-base font-semibold text-slate-900 dark:text-white mb-2">Phase 2 · App Builder</h3>
-            <ul class="space-y-2 text-sm text-slate-600 dark:text-slate-300">
-              <li>• Dataflows & scheduling</li>
-              <li>• Using Salesforce templates</li>
-              <li>• Event monitoring / sales analytics style apps</li>
-            </ul>
-          </UCard>
-          <UCard>
-            <h3 class="text-base font-semibold text-slate-900 dark:text-white mb-2">Phase 3 · Advanced</h3>
-            <ul class="space-y-2 text-sm text-slate-600 dark:text-slate-300">
-              <li>• Bindings, SAQL, compare tables</li>
-              <li>• Row-level security</li>
-              <li>• Packaging & handoff</li>
-            </ul>
-          </UCard>
-        </div>
-      </UContainer>
-    </section>
-
-    <!-- 5. 8-WEEK TIMELINE -->
-    <section class="pb-14 md:pb-16">
-      <UContainer class="space-y-6">
-        <div>
-          <p class="text-xs uppercase tracking-[0.3em] text-slate-500 dark:text-slate-300">
-            Learning timeline
-          </p>
-          <h2 class="text-2xl font-semibold tracking-tight text-slate-900 dark:text-white mt-2">
-            8-week path
-          </h2>
-        </div>
-
-        <div class="flex gap-4 overflow-x-auto pb-3">
-          <UCard
-            v-for="item in [
-              { week: 'Week 0', title: 'Setup', desc: 'Dev org, CRM Analytics enabled.' },
-              { week: 'Week 1', title: 'Datasets', desc: 'Import, transform, recipes.' },
-              { week: 'Week 2', title: 'Dashboards', desc: 'Charts, filters, compact tables.' },
-              { week: 'Week 3', title: 'Dataflows', desc: 'Run & fix “not fetching”.' },
-              { week: 'Week 4', title: 'Apps', desc: 'Event monitoring / sales analytics.' },
-              { week: 'Week 5', title: 'Embedding', desc: 'LWC, Lightning, URL filters.' },
-              { week: 'Week 6', title: 'Advanced', desc: 'Bindings, SAQL, compare tables.' },
-              { week: 'Week 7–8', title: 'Capstone', desc: 'Build AE / .Org pricing dashboard.' }
-            ]"
-            :key="item.week"
-            class="min-w-[180px]"
-          >
-            <p class="text-xs font-medium text-slate-500 dark:text-slate-200">
-              {{ item.week }}
-            </p>
-            <h3 class="text-sm font-semibold mb-1 text-slate-900 dark:text-white">
-              {{ item.title }}
-            </h3>
-            <p class="text-xs text-slate-500 dark:text-slate-300">
-              {{ item.desc }}
-            </p>
-          </UCard>
-        </div>
-      </UContainer>
-    </section>
-
-    <!-- 6. DELIVERY FORMATS -->
-    <section class="py-12">
-      <UContainer>
-        <div class="grid gap-6 md:grid-cols-3">
-          <UCard>
-            <h3 class="font-semibold text-slate-900 dark:text-white mb-2">Docs-first</h3>
-            <p class="text-sm text-slate-500 dark:text-slate-300">
-              Nuxt Content pages for every topic. Good for SEO, good for your Ghost blog, good for students.
-            </p>
-          </UCard>
-          <UCard>
-            <h3 class="font-semibold text-slate-900 dark:text-white mb-2">Video-friendly</h3>
-            <p class="text-sm text-slate-500 dark:text-slate-300">
-              Each section can map to a YouTube episode. Use same outline for shorts/reels.
-            </p>
-          </UCard>
-          <UCard>
-            <h3 class="font-semibold text-slate-900 dark:text-white mb-2">Dashboard embeds</h3>
-            <p class="text-sm text-slate-500 dark:text-slate-300">
-              Reserve slots in the UI to drop CRM Analytics dashboard iframes.
-            </p>
-          </UCard>
-        </div>
-      </UContainer>
-    </section>
-
-    <!-- 7. MODULES FROM CONTENT (this is safe: your template has `docs`) -->
-    <section class="py-12 bg-slate-50 dark:bg-neutral-900/30">
-      <UContainer class="space-y-6">
+    <!-- 3. FEATURED COURSES -->
+    <section class="bg-slate-50 py-14">
+      <div class="mx-auto max-w-6xl px-4">
         <div class="flex items-center justify-between gap-4">
           <div>
-            <p class="text-xs uppercase tracking-[0.3em] text-slate-500 dark:text-slate-300">
-              Nuxt Content
-            </p>
-            <h2 class="text-lg md:text-xl font-semibold text-slate-900 dark:text-white mt-1">
-              Latest docs
-            </h2>
+            <h2 class="text-2xl font-bold text-slate-900">Popular modules</h2>
+            <p class="text-sm text-slate-500">Hardcoded so SSR never cries.</p>
           </div>
-          <UButton to="/getting-started">
-            View docs
-          </UButton>
+          <NuxtLink to="/getting-started" class="text-sm font-medium text-slate-900 hover:underline">
+            View all →
+          </NuxtLink>
         </div>
-
-        <ContentList path="/docs" v-slot="{ list }">
-          <div v-if="list && list.length" class="grid gap-4 md:grid-cols-2">
-            <UCard
-              v-for="doc in list"
-              :key="doc._path"
-              :to="doc._path"
-              class="hover:border-slate-400 transition"
-            >
-              <h3 class="font-semibold text-slate-900 dark:text-white">
-                {{ doc.title || 'Untitled' }}
-              </h3>
-              <p v-if="doc.description" class="text-sm text-slate-500 dark:text-slate-300 mt-1">
-                {{ doc.description }}
+        <div class="mt-8 grid gap-6 md:grid-cols-3">
+          <article class="flex flex-col justify-between rounded-2xl border border-slate-200 bg-white p-6">
+            <div>
+              <p class="text-xs font-medium uppercase tracking-wide text-slate-500">Module 1</p>
+              <h3 class="mt-2 text-lg font-semibold text-slate-900">Getting Started</h3>
+              <p class="mt-2 text-sm text-slate-500">
+                Understand folder <code>/content/1-getting-started</code>, how docs auto-render, and how to extend it.
               </p>
-              <p class="text-xs text-slate-400 mt-2">
-                {{ doc._path }}
+            </div>
+            <NuxtLink to="/getting-started" class="mt-4 text-sm font-medium text-slate-900 hover:underline">
+              Start →
+            </NuxtLink>
+          </article>
+
+          <article class="flex flex-col justify-between rounded-2xl border border-slate-200 bg-white p-6">
+            <div>
+              <p class="text-xs font-medium uppercase tracking-wide text-slate-500">Module 2</p>
+              <h3 class="mt-2 text-lg font-semibold text-slate-900">Move to Bangalore</h3>
+              <p class="mt-2 text-sm text-slate-500">
+                Cost, areas, roommates, “I am from Mahroni can I survive?” syllabus.
               </p>
-            </UCard>
+            </div>
+            <button type="button" class="mt-4 text-sm font-medium text-slate-400" disabled>
+              Coming soon
+            </button>
+          </article>
+
+          <article class="flex flex-col justify-between rounded-2xl border border-slate-200 bg-white p-6">
+            <div>
+              <p class="text-xs font-medium uppercase tracking-wide text-slate-500">Module 3</p>
+              <h3 class="mt-2 text-lg font-semibold text-slate-900">Content + Portfolio</h3>
+              <p class="mt-2 text-sm text-slate-500">
+                Blend YouTube + Docs + Nuxt UI like a civilized Deadpool.
+              </p>
+            </div>
+            <button type="button" class="mt-4 text-sm font-medium text-slate-400" disabled>
+              Coming soon
+            </button>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. LEARNING PATH -->
+    <section class="bg-white py-14">
+      <div class="mx-auto max-w-6xl px-4">
+        <h2 class="text-2xl font-bold text-slate-900">Learning path</h2>
+        <p class="text-sm text-slate-500">Follow in order, don’t improvise like Jack Sparrow in HR round.</p>
+        <div class="mt-8 grid gap-4 md:grid-cols-5">
+          <div class="rounded-xl border border-slate-200 bg-slate-50 p-4">
+            <p class="text-xs font-semibold text-slate-500">Step 1</p>
+            <p class="mt-1 text-sm font-semibold text-slate-900">Read “Getting Started”</p>
           </div>
-          <div v-else class="text-sm text-slate-500 dark:text-slate-300">
-            No docs found in <code>/docs</code>.
+          <div class="rounded-xl border border-slate-200 bg-slate-50 p-4">
+            <p class="text-xs font-semibold text-slate-500">Step 2</p>
+            <p class="mt-1 text-sm font-semibold text-slate-900">Setup local Nuxt</p>
           </div>
-        </ContentList>
-      </UContainer>
-    </section>
-
-    <!-- 8. TOOLS STACK -->
-    <section class="py-12">
-      <UContainer>
-        <div class="grid gap-6 md:grid-cols-4">
-          <UCard><p class="text-sm">Salesforce CRM Analytics</p></UCard>
-          <UCard><p class="text-sm">Nuxt 4 + Nuxt Content</p></UCard>
-          <UCard><p class="text-sm">Nuxt UI</p></UCard>
-          <UCard><p class="text-sm">Your Ghost / YouTube</p></UCard>
+          <div class="rounded-xl border border-slate-200 bg-slate-50 p-4">
+            <p class="text-xs font-semibold text-slate-500">Step 3</p>
+            <p class="mt-1 text-sm font-semibold text-slate-900">Connect CMS (Ghost)</p>
+          </div>
+          <div class="rounded-xl border border-slate-200 bg-slate-50 p-4">
+            <p class="text-xs font-semibold text-slate-500">Step 4</p>
+            <p class="mt-1 text-sm font-semibold text-slate-900">Create course pages</p>
+          </div>
+          <div class="rounded-xl border border-slate-200 bg-slate-50 p-4">
+            <p class="text-xs font-semibold text-slate-500">Step 5</p>
+            <p class="mt-1 text-sm font-semibold text-slate-900">Publish & share</p>
+          </div>
         </div>
-      </UContainer>
+      </div>
     </section>
 
-    <!-- 9. FAQ -->
-    <section class="py-12 bg-slate-50 dark:bg-neutral-900/30">
-      <UContainer class="space-y-6">
-        <h2 class="text-xl font-semibold text-slate-900 dark:text-white">FAQ</h2>
-        <div class="grid gap-4 md:grid-cols-2">
-          <UCard>
-            <h3 class="font-medium mb-2">Do I need Salesforce org?</h3>
-            <p class="text-sm text-slate-500 dark:text-slate-300">
-              Yes, at least a dev org or sandbox where CRM Analytics is enabled.
-            </p>
-          </UCard>
-          <UCard>
-            <h3 class="font-medium mb-2">Can I add ads?</h3>
-            <p class="text-sm text-slate-500 dark:text-slate-300">
-              Yes, wrap sections in <code>&lt;ClientOnly&gt;</code> and drop your GoogleAd component (like you already did).
-            </p>
-          </UCard>
-          <UCard>
-            <h3 class="font-medium mb-2">Is this only for India?</h3>
-            <p class="text-sm text-slate-500 dark:text-slate-300">
-              No. Content is Salesforce-global. You can talk in Hinglish for YouTube, docs stay neutral.
-            </p>
-          </UCard>
-          <UCard>
-            <h3 class="font-medium mb-2">Can I make it paid later?</h3>
-            <p class="text-sm text-slate-500 dark:text-slate-300">
-              Yes, integrate Supabase / Stripe and show premium content cards in this same layout.
-            </p>
-          </UCard>
+    <!-- 5. CATEGORIES -->
+    <section class="bg-slate-50 py-14">
+      <div class="mx-auto max-w-6xl px-4">
+        <h2 class="text-2xl font-bold text-slate-900">Categories</h2>
+        <p class="text-sm text-slate-500">Docs are grouped, you just hid them in <code>/content</code>.</p>
+        <div class="mt-6 grid gap-4 md:grid-cols-4">
+          <div class="rounded-xl border border-slate-200 bg-white p-4">
+            <h3 class="font-semibold text-slate-900">Getting Started</h3>
+            <p class="text-sm text-slate-500">Install, config, structure</p>
+          </div>
+          <div class="rounded-xl border border-slate-200 bg-white p-4">
+            <h3 class="font-semibold text-slate-900">Essentials</h3>
+            <p class="text-sm text-slate-500">Real life Bangalore setup</p>
+          </div>
+          <div class="rounded-xl border border-slate-200 bg-white p-4">
+            <h3 class="font-semibold text-slate-900">Career & Content</h3>
+            <p class="text-sm text-slate-500">YouTube + Docs + Job</p>
+          </div>
+          <div class="rounded-xl border border-slate-200 bg-white p-4">
+            <h3 class="font-semibold text-slate-900">Tools</h3>
+            <p class="text-sm text-slate-500">Nuxt UI, Tailwind, Ghost</p>
+          </div>
         </div>
-      </UContainer>
+      </div>
     </section>
 
-    <!-- 10. CTA -->
-    <section class="py-14">
-      <UContainer>
-        <div class="rounded-2xl bg-slate-900 text-white px-6 py-10 md:px-10 md:py-14 text-center space-y-4">
-          <h2 class="text-2xl md:text-3xl font-semibold">Ready to teach CRM Analytics your way?</h2>
-          <p class="text-sm md:text-base text-slate-200 max-w-3xl mx-auto">
-            Keep this page as the public landing. Move deeper lessons to content folders, gate with Supabase later.
-          </p>
-          <UButton to="/" size="lg" color="white" variant="solid" class="text-slate-900">
-            Start with the docs
-          </UButton>
+    <!-- 6. TESTIMONIALS (STATIC) -->
+    <section class="bg-white py-14">
+      <div class="mx-auto max-w-6xl px-4">
+        <h2 class="text-2xl font-bold text-slate-900">What learners say</h2>
+        <div class="mt-6 grid gap-6 md:grid-cols-3">
+          <div class="rounded-2xl border border-slate-200 bg-slate-50 p-5">
+            <p class="text-sm text-slate-700">
+              “Finally doc + content + Bangalore specific. No generic AI junk.”
+            </p>
+            <p class="mt-3 text-xs font-semibold text-slate-500">— A very real person</p>
+          </div>
+          <div class="rounded-2xl border border-slate-200 bg-slate-50 p-5">
+            <p class="text-sm text-slate-700">
+              “I shipped a Nuxt docs site and showed it in interview, got offer.”
+            </p>
+            <p class="mt-3 text-xs font-semibold text-slate-500">— Job Seeker</p>
+          </div>
+          <div class="rounded-2xl border border-slate-200 bg-slate-50 p-5">
+            <p class="text-sm text-slate-700">
+              “Swarnil explained like Deadpool, but cleaner.”
+            </p>
+            <p class="mt-3 text-xs font-semibold text-slate-500">— Viewer</p>
+          </div>
         </div>
-      </UContainer>
+      </div>
     </section>
 
-    <!-- 11. ORIGINAL CONTENT (from /content/landing/index.md) -->
-    <UContainer class="pb-16">
-      <ContentRenderer
-        v-if="page"
-        :value="page"
-        :prose="false"
-      />
-    </UContainer>
-  </div>
+    <!-- 7. FAQ -->
+    <section class="bg-slate-50 py-14">
+      <div class="mx-auto max-w-6xl px-4">
+        <h2 class="text-2xl font-bold text-slate-900">FAQ</h2>
+        <div class="mt-6 space-y-4">
+          <details class="rounded-xl border border-slate-200 bg-white p-4">
+            <summary class="cursor-pointer text-sm font-semibold text-slate-900">
+              Why was Vercel giving 500?
+            </summary>
+            <p class="mt-2 text-sm text-slate-500">
+              Because SSR tried to render something that depended on runtime/content query. This page is static, so it won’t.
+            </p>
+          </details>
+          <details class="rounded-xl border border-slate-200 bg-white p-4">
+            <summary class="cursor-pointer text-sm font-semibold text-slate-900">
+              Can I fetch posts from Ghost / Supabase later?
+            </summary>
+            <p class="mt-2 text-sm text-slate-500">
+              Yes. Add it in a client-only component or guard it with <code>process.client</code> later.
+            </p>
+          </details>
+          <details class="rounded-xl border border-slate-200 bg-white p-4">
+            <summary class="cursor-pointer text-sm font-semibold text-slate-900">
+              Where are the original docs?
+            </summary>
+            <p class="mt-2 text-sm text-slate-500">
+              In <code>/content/1-getting-started</code> and other folders you already showed.
+            </p>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- 8. BLOG PREVIEW (STATIC) -->
+    <section class="bg-white py-14">
+      <div class="mx-auto max-w-6xl px-4">
+        <h2 class="text-2xl font-bold text-slate-900">Latest from the blog</h2>
+        <div class="mt-6 grid gap-6 md:grid-cols-3">
+          <article class="rounded-2xl border border-slate-200 bg-slate-50 p-5">
+            <p class="text-xs text-slate-500">Story</p>
+            <h3 class="mt-2 text-lg font-semibold text-slate-900">How I moved from Mahroni to Bangalore</h3>
+            <p class="mt-2 text-sm text-slate-500">And why documenting it matters.</p>
+          </article>
+          <article class="rounded-2xl border border-slate-200 bg-slate-50 p-5">
+            <p class="text-xs text-slate-500">Docs</p>
+            <h3 class="mt-2 text-lg font-semibold text-slate-900">Structuring your LMS with Nuxt Content</h3>
+            <p class="mt-2 text-sm text-slate-500">Simple collections, no drama.</p>
+          </article>
+          <article class="rounded-2xl border border-slate-200 bg-slate-50 p-5">
+            <p class="text-xs text-slate-500">YouTube</p>
+            <h3 class="mt-2 text-lg font-semibold text-slate-900">Deadpool style hooks for dev audience</h3>
+            <p class="mt-2 text-sm text-slate-500">10 lines, 10x watchtime.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- 9. CTA -->
+    <section class="bg-slate-900 py-16">
+      <div class="mx-auto max-w-6xl px-4 text-center text-white">
+        <h2 class="text-3xl font-bold">Ready to ship your docs?</h2>
+        <p class="mt-3 text-sm text-slate-200">Start from the content you already have.</p>
+        <NuxtLink
+          to="/getting-started"
+          class="mt-6 inline-flex items-center gap-2 rounded-lg bg-white px-6 py-3 text-sm font-medium text-slate-900 hover:bg-slate-100"
+        >
+          Go to Getting Started →
+        </NuxtLink>
+      </div>
+    </section>
+
+    <!-- 10. FOOTER -->
+    <footer class="bg-white py-6">
+      <div class="mx-auto max-w-6xl px-4 flex items-center justify-between">
+        <p class="text-xs text-slate-500">© {{ new Date().getFullYear() }} Imswarnil · Bangalore Job Seekers Guide</p>
+        <p class="text-xs text-slate-400">Built with Nuxt 4 · Tailwind · no crying SSR</p>
+      </div>
+    </footer>
+  </main>
 </template>
