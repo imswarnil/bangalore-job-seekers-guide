@@ -159,7 +159,7 @@
 
   .academy-placeholder__chart {
     @apply h-28 rounded-md;
-    background: linear-gradient(120deg, rgba(1,118,211,.35), rgba(1,118,211,.05));
+    background: linear-gradient(120deg, rgba(1,118,211,.28), rgba(1,118,211,.05));
     background-image: repeating-linear-gradient(
       90deg,
       rgba(255,255,255,.25) 0,

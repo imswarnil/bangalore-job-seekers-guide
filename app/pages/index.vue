@@ -1,23 +1,36 @@
 <script setup lang="ts">
-const { data: page } = await useAsyncData('index', () =>
-  queryCollection('landing').path('/').first()
-)
+// 1) Try to load content from /1-getting-started
+// 2) If not found, fallback to /getting-started
+const { data: gettingStarted } = await useAsyncData('getting-started', async () => {
+  // try numbered folder (like your current one)
+  const numbered = await queryContent('/1-getting-started')
+    .only(['_path', 'title', 'description', 'navigation', 'icon'])
+    .sort({ _file: 1 })
+    .find()
 
-if (!page.value) {
-  throw createError({ statusCode: 404, statusMessage: 'Page not found', fatal: true })
-}
+  if (numbered && numbered.length) {
+    return numbered
+  }
 
-const title = page.value.seo?.title || page.value.title
-const description = page.value.seo?.description || page.value.description
+  // fallback if someone renames the folder to "getting-started"
+  const plain = await queryContent('/getting-started')
+    .only(['_path', 'title', 'description', 'navigation', 'icon'])
+    .sort({ _file: 1 })
+    .find()
+
+  return plain ?? []
+})
+
+// basic SEO for home
+const title = 'CRM Analytics Academy — Nuxt + Salesforce CRM Analytics'
+const description = 'Learn Salesforce Einstein Analytics / CRM Analytics with structured 8-week curriculum, Nuxt UI docs, and real Salesforce-style examples.'
 
 useSeoMeta({
   titleTemplate: '',
   title,
   ogTitle: title,
   description,
-  ogDescription: description,
-  ogImage: 'https://ui.nuxt.com/assets/templates/nuxt/docs-light.png',
-  twitterImage: 'https://ui.nuxt.com/assets/templates/nuxt/docs-light.png'
+  ogDescription: description
 })
 </script>
 
@@ -27,22 +40,17 @@ useSeoMeta({
     <UPageHero
       class="dark:bg-gradient-to-b from-neutral-950 to-neutral-900"
       title="CRM Analytics Academy"
-      description="Learn Salesforce Einstein Analytics / CRM Analytics with real dashboards, dataflows and app templates — explained the Swarnil way."
+      description="Docs-style learning space to teach Salesforce Einstein / CRM Analytics, with real projects, Twilio-ish dashboards, and Indian context."
       orientation="horizontal"
       :ui="{ title: 'text-4xl sm:text-5xl font-bold tracking-tight', description: 'text-base sm:text-lg max-w-2xl' }"
     >
       <template #links>
-        <!-- ✅ this route exists in your content -->
-        <UButton
-          to="/getting-started"
-          size="xl"
-          icon="i-lucide-arrow-right"
-          trailing
-        >
-          Start now
+        <!-- ✅ this exists in your template -->
+        <UButton to="/1-getting-started" size="xl" icon="i-lucide-arrow-right" trailing>
+          Start learning
         </UButton>
 
-        <!-- ✅ external link, no Nuxt route -->
+        <!-- ✅ external, no Nuxt route -->
         <UButton
           to="https://youtube.com/@imswarnil"
           target="_blank"
@@ -54,8 +62,8 @@ useSeoMeta({
         </UButton>
       </template>
 
+      <!-- right column: dummy dashboard placeholder -->
       <template #right>
-        <!-- Dummy dashboard/image placeholder -->
         <div class="academy-placeholder">
           <div class="academy-placeholder__header">
             <span class="dot bg-red-400" />
@@ -64,21 +72,21 @@ useSeoMeta({
           </div>
           <div class="academy-placeholder__body">
             <p class="text-xs uppercase tracking-wide text-slate-500 dark:text-slate-200 mb-1">
-              Dashboard Preview
+              CRM Analytics — sample view
             </p>
             <p class="text-sm font-semibold mb-4">
-              AE Pipeline — Org Pricing Overview
+              AE Pipeline — Org Pricing
             </p>
             <div class="academy-placeholder__chart" />
             <p class="text-[10px] text-slate-400 mt-3">
-              * dummy chart – replace with real embed
+              * dummy placeholder, swap with real dashboard embed later
             </p>
           </div>
         </div>
       </template>
     </UPageHero>
 
-    <!-- ADS (you already had this pattern) -->
+    <!-- ADS like you had -->
     <div class="hidden lg:block mt-6 px-4">
       <ClientOnly>
         <GoogleAd
@@ -86,54 +94,53 @@ useSeoMeta({
           ad-format="auto"
           :fullWidth="true"
           ins-style="display:block"
-          :refreshKey="page?.updatedAt || page?.path"
+          :refreshKey="Date.now()"
         />
       </ClientOnly>
     </div>
 
-    <!-- CURRICULUM -->
+    <!-- CURRICULUM BLOCK -->
     <UContainer class="py-12 space-y-10">
       <div class="flex flex-col gap-2">
         <p class="text-sm uppercase tracking-[0.25em] text-slate-500 dark:text-slate-300">
-          Program Curriculum
+          Curriculum
         </p>
         <h2 class="text-2xl font-semibold tracking-tight">
-          3 tracks — beginner → app builder → production
+          CRM Analytics in 3 phases
         </h2>
         <p class="text-slate-600 dark:text-slate-300 max-w-2xl">
-          Use this structure to create lessons in Content or Supabase later. Nuxt UI just makes it look official.
+          Foundations → App building → Production/Twilio-ish. Same structure you can show in videos, Ghost posts, or Supabase lessons.
         </p>
       </div>
 
-      <!-- simple grid (no UPageGrid, so no missing component errors) -->
       <div class="grid gap-6 md:grid-cols-3">
-        <!-- Track 1 -->
+        <!-- Phase 1 -->
         <UCard>
           <div class="flex items-start gap-3 mb-3">
             <UIcon name="i-lucide-sparkles" class="h-6 w-6" style="color: var(--ui-primary)" />
             <div>
-              <h3 class="font-semibold text-base">Track 1 · Foundations</h3>
+              <h3 class="font-semibold text-base">Phase 1 · Foundations</h3>
               <p class="text-sm text-slate-500 dark:text-slate-300">
-                Week 0–2 · Basics + how CRM Analytics is different from normal reports.
+                Week 0–2 · “What is CRM Analytics” + datasets + lenses.
               </p>
             </div>
           </div>
           <UAccordion
             size="sm"
             :items="[
-              { label: 'Lesson 1: What is CRM Analytics?', content: 'Positioning, where it fits, why data platform.' },
-              { label: 'Lesson 2: Datasets & Recipes', content: 'SAQL vs SOQL, joins, security concept.' },
-              { label: 'Lesson 3: Lenses & Dashboards', content: 'Charts, pages, compact tables.' }
+              { label: 'Intro to CRM Analytics', content: 'Positioning vs reports, Tableau, Data Cloud.' },
+              { label: 'Data & Datasets', content: 'Load, transform, recipes, row-level idea.' },
+              { label: 'Dashboards basics', content: 'Charts, pages, filters.' }
             ]"
           />
         </UCard>
 
-        <!-- Track 2 -->
+        <!-- Phase 2 -->
         <UCard>
           <div class="flex items-start gap-3 mb-3">
-            <UIcon name="i-lucide-layers" class="h-6 w-6" style="color: var(--ui-primary)" />
+            <UIcon name="i-lucide-layout-dashboard" class="h-6 w-6" style="color: var(--ui-primary)" />
             <div>
-              <h3 class="font-semibold text-base">Track 2 · App Builder</h3>
+              <h3 class="font-semibold text-base">Phase 2 · App Builder</h3>
               <p class="text-sm text-slate-500 dark:text-slate-300">
                 Week 3–5 · Build event monitoring / sales analytics style apps.
               </p>
@@ -142,19 +149,19 @@ useSeoMeta({
           <UAccordion
             size="sm"
             :items="[
-              { label: 'Lesson 4: Dataflows & scheduling', content: 'Create, run, debug, monitor.' },
-              { label: 'Lesson 5: Templates & cloning', content: 'How Salesforce ships prebuilt apps.' },
-              { label: 'Lesson 6: Embedding in Lightning', content: 'Dashboard component, filters from LWC.' }
+              { label: 'Dataflows & scheduling', content: 'Create, run, debug when app “not fetching”.' },
+              { label: 'Templates & cloning', content: 'How Salesforce ships the apps you saw.' },
+              { label: 'Lightning embedding', content: 'Dashboard component, filter from record page.' }
             ]"
           />
         </UCard>
 
-        <!-- Track 3 -->
+        <!-- Phase 3 -->
         <UCard>
           <div class="flex items-start gap-3 mb-3">
             <UIcon name="i-lucide-bot" class="h-6 w-6" style="color: var(--ui-primary)" />
             <div>
-              <h3 class="font-semibold text-base">Track 3 · Advanced / Twilio-ish</h3>
+              <h3 class="font-semibold text-base">Phase 3 · Advanced / Twilio-ish</h3>
               <p class="text-sm text-slate-500 dark:text-slate-300">
                 Week 6–8 · Production dashboards, bindings, RLS, approvals.
               </p>
@@ -163,9 +170,9 @@ useSeoMeta({
           <UAccordion
             size="sm"
             :items="[
-              { label: 'Lesson 7: Case/Quote history dashboards', content: 'Multi-dataset, percent diff, filters.' },
-              { label: 'Lesson 8: Row-level security (RLS)', content: 'User/role/account based access.' },
-              { label: 'Lesson 9: Packaging & handoff', content: 'Move from sandbox → prod, documentation.' }
+              { label: 'Case/Quote history dashboards', content: 'Multi-dataset, compare tables.' },
+              { label: 'Row-level security', content: 'User, role, account hierarchy.' },
+              { label: 'Packaging & handoff', content: 'Move sandbox → prod, document in Ghost.' }
             ]"
           />
         </UCard>
@@ -179,21 +186,21 @@ useSeoMeta({
           Learning timeline
         </p>
         <h2 class="text-2xl font-semibold tracking-tight">
-          8 weeks from “what is Einstein Analytics?” to “manager, look at this”
+          8-week path to “I can demo this”
         </h2>
       </div>
 
       <div class="academy-timeline">
         <UCard
           v-for="item in [
-            { week: 'Week 0', title: 'Setup', desc: 'CRM Analytics enabled, sample app, basic dataset.' },
-            { week: 'Week 1', title: 'Datasets', desc: 'Import, transform, recipes, RLS concept.' },
-            { week: 'Week 2', title: 'Dashboards', desc: 'Charts, pages, compact tables, filters.' },
-            { week: 'Week 3', title: 'Dataflows', desc: 'Run + fix “not fetching” issues 👀.' },
-            { week: 'Week 4', title: 'Apps', desc: 'Event Monitoring style, extend templates.' },
+            { week: 'Week 0', title: 'Setup', desc: 'Dev org, CRM Analytics enabled, sample data.' },
+            { week: 'Week 1', title: 'Datasets', desc: 'Import, transform, recipes.' },
+            { week: 'Week 2', title: 'Dashboards', desc: 'Charts, filters, compact tables.' },
+            { week: 'Week 3', title: 'Dataflows', desc: 'Run & fix “not fetching” issues.' },
+            { week: 'Week 4', title: 'Apps', desc: 'Event Monitoring / Sales Analytics pattern.' },
             { week: 'Week 5', title: 'Embedding', desc: 'LWC, Lightning pages, URL filters.' },
             { week: 'Week 6', title: 'Advanced', desc: 'Bindings, SAQL, compare tables.' },
-            { week: 'Week 7–8', title: 'Capstone', desc: 'Build Twilio-ish AE / .Org pricing dashboard.' }
+            { week: 'Week 7–8', title: 'Capstone', desc: 'Build AE / .Org pricing dashboard.' }
           ]"
           :key="item.week"
           class="academy-timeline__card"
@@ -207,13 +214,60 @@ useSeoMeta({
       </div>
     </UContainer>
 
-    <!-- CONTENT FROM /content/landing/index.md -->
-    <UContainer class="pb-16">
-      <ContentRenderer
-        v-if="page"
-        :value="page"
-        :prose="false"
-      />
+    <!-- 🔽 CONTENT FROM YOUR ACTUAL FOLDERS -->
+    <UContainer class="pb-20 space-y-6">
+      <div class="flex items-center justify-between gap-4">
+        <div>
+          <p class="text-sm uppercase tracking-[0.25em] text-slate-500 dark:text-slate-300">
+            From docs
+          </p>
+          <h2 class="text-lg font-semibold">
+            Getting started content
+          </h2>
+          <p class="text-sm text-slate-500 dark:text-slate-300">
+            Pulled from <code>/content/1-getting-started</code> (or <code>/content/getting-started</code>).
+          </p>
+        </div>
+        <!-- we can keep this button purely cosmetic -->
+        <UButton to="/1-getting-started" icon="i-lucide-arrow-right" trailing>
+          View all
+        </UButton>
+      </div>
+
+      <div class="grid gap-4 md:grid-cols-2">
+        <UCard
+          v-for="doc in gettingStarted || []"
+          :key="doc._path"
+          :to="doc._path"
+          class="hover:border-[color:var(--ui-primary)] transition"
+        >
+          <div class="flex gap-3 items-start">
+            <UIcon
+              v-if="doc.navigation?.icon || doc.icon"
+              :name="doc.navigation?.icon || doc.icon"
+              class="h-6 w-6 mt-1"
+            />
+            <div>
+              <h3 class="font-semibold">
+                {{ doc.title || 'Untitled doc' }}
+              </h3>
+              <p class="text-sm text-slate-500 dark:text-slate-300" v-if="doc.description">
+                {{ doc.description }}
+              </p>
+              <p class="text-xs text-slate-400 mt-2">
+                {{ doc._path }}
+              </p>
+            </div>
+          </div>
+        </UCard>
+
+        <!-- if empty, show message -->
+        <UCard v-if="(gettingStarted && gettingStarted.length === 0)">
+          <p class="text-sm text-slate-500 dark:text-slate-300">
+            No docs found in <code>/1-getting-started</code>. Create <code>content/1-getting-started/index.md</code> or rename to <code>content/getting-started/</code>.
+          </p>
+        </UCard>
+      </div>
     </UContainer>
   </UPage>
 </template>
